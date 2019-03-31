@@ -3,7 +3,9 @@ package ru.gcsales.app;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
+import javax.inject.Inject;
+
+import ru.gcsales.app.auth.AuthManager;
 
 /**
  * Splash screen activity.
@@ -19,16 +21,20 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class SplashScreenActivity extends AppCompatActivity {
 
+    @Inject
+    AuthManager mAuthManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        App.getComponent().inject(this);
         checkSignIn();
     }
 
     private void checkSignIn() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() != null) {
+        boolean signedIn = mAuthManager.isSignedIn();
+        if (signedIn) {
             startMainActivity();
         } else {
             startSignInActivity();

@@ -9,6 +9,10 @@ import android.widget.Button;
 
 import com.firebase.ui.auth.AuthUI;
 
+import javax.inject.Inject;
+
+import ru.gcsales.app.auth.AuthManager;
+
 /**
  * Main activity of the app.
  *
@@ -18,6 +22,9 @@ import com.firebase.ui.auth.AuthUI;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+
+    @Inject
+    AuthManager mAuthManager;
 
     private Button mButton;
 
@@ -35,9 +42,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        App.getComponent().inject(this);
 
         mButton = findViewById(R.id.button);
-        mButton.setOnClickListener(v -> AuthUI.getInstance().signOut(MainActivity.this)
+        mButton.setOnClickListener(v -> mAuthManager.signOut()
                 .addOnCompleteListener(task -> {
                     startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
                     finish();
