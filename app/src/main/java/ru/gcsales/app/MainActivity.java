@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.Button;
-
-import com.firebase.ui.auth.AuthUI;
 
 import javax.inject.Inject;
 
@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     AuthManager mAuthManager;
 
+    private Toolbar mToolbar;
+    private BottomNavigationView mNavigation;
     private Button mButton;
 
     /**
@@ -44,10 +46,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         App.getComponent().inject(this);
 
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+
+        mNavigation = findViewById(R.id.bottom_navigation);
+
         mButton = findViewById(R.id.button);
         mButton.setOnClickListener(v -> mAuthManager.signOut()
                 .addOnCompleteListener(task -> {
-                    startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
+                    startActivity(SignInActivity.newIntent(this));
                     finish();
                 }));
     }
