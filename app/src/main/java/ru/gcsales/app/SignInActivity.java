@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 111;
 
+    private View mRoot;
     private Button mSignInButton;
 
     /**
@@ -45,6 +47,8 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        mRoot = findViewById(R.id.root);
 
         mSignInButton = findViewById(R.id.button_sign_in);
         mSignInButton.setOnClickListener(v -> startSignInFlow());
@@ -64,6 +68,8 @@ public class SignInActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             startMainActivity();
         } else {
+            mRoot.setVisibility(View.VISIBLE);
+
             if (response == null) {
                 showToast(R.string.sign_in_cancelled);
                 return;
@@ -89,6 +95,8 @@ public class SignInActivity extends AppCompatActivity {
                         .setTheme(R.style.AuthTheme)
                         .build(),
                 RC_SIGN_IN);
+
+        mRoot.setVisibility(View.INVISIBLE);
     }
 
     private void startMainActivity() {
