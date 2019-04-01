@@ -1,10 +1,12 @@
-package ru.gcsales.app;
+package ru.gcsales.app.presentation;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
+import ru.gcsales.app.App;
+import ru.gcsales.app.R;
 import ru.gcsales.app.auth.AuthManager;
 
 /**

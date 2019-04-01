@@ -1,4 +1,4 @@
-package ru.gcsales.app;
+package ru.gcsales.app.presentation;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,8 @@ import com.firebase.ui.auth.IdpResponse;
 
 import java.util.Arrays;
 import java.util.List;
+
+import ru.gcsales.app.R;
 
 /**
  * Sign in activity.

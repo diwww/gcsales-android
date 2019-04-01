@@ -3,9 +3,9 @@ package ru.gcsales.app.dagger;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import ru.gcsales.app.MainActivity;
-import ru.gcsales.app.SignInActivity;
-import ru.gcsales.app.SplashScreenActivity;
+import ru.gcsales.app.presentation.MainActivity;
+import ru.gcsales.app.presentation.SignInActivity;
+import ru.gcsales.app.presentation.SplashScreenActivity;
 
 /**
  * Main dagger {@link Component component} of the application.
