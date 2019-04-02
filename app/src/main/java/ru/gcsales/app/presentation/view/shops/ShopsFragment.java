@@ -16,7 +16,7 @@ import ru.gcsales.app.R;
  * @author Maxim Surovtsev
  * @since 01/04/2019
  */
-public class ShopsFragment extends Fragment {
+public class ShopsFragment extends Fragment implements ShopsView {
 
     public static final String TAG = "ShopsFragment";
 

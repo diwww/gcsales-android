@@ -29,9 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    @Inject
-    AuthManager mAuthManager;
-
     private Toolbar mToolbar;
     private BottomNavigationView mBottomNavigation;
 
