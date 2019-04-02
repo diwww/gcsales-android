@@ -1,4 +1,4 @@
-package ru.gcsales.app.presentation;
+package ru.gcsales.app.presentation.view.main;
 
 import android.content.Context;
 import android.content.Intent;

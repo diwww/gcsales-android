@@ -12,15 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".presentation.SplashScreenActivity">
+        <activity android:name=".presentation.view.main.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.SignInActivity"/>
-        <activity android:name=".presentation.MainActivity"/>
+        <activity android:name=".presentation.view.main.SignInActivity"/>
+        <activity android:name=".presentation.view.main.MainActivity"/>
     </application>
 
 </manifest>

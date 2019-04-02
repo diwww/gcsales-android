@@ -1,4 +1,4 @@
-package ru.gcsales.app.presentation;
+package ru.gcsales.app.presentation.view.map;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,32 +11,27 @@ import android.view.ViewGroup;
 import ru.gcsales.app.R;
 
 /**
- * Fragment which contains shopping list.
+ * Fragment with map of nearest shops.
  *
  * @author Maxim Surovtsev
  * @since 01/04/2019
  */
-public class ListFragment extends Fragment {
+public class MapFragment extends Fragment {
 
-    public static final String TAG = "ListFragment";
+    public static final String TAG = "MapFragment";
 
     /**
      * Creates a new instance of this fragment.
      *
      * @return new fragment instance
      */
-    public static ListFragment newInstance() {
-        return new ListFragment();
+    public static MapFragment newInstance() {
+        return new MapFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_list, container, false);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+        return inflater.inflate(R.layout.fragment_map, container, false);
     }
 }
