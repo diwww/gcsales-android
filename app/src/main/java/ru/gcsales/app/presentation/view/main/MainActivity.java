@@ -10,11 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import javax.inject.Inject;
-
 import ru.gcsales.app.App;
 import ru.gcsales.app.R;
-import ru.gcsales.app.auth.AuthManager;
 import ru.gcsales.app.presentation.view.list.ListFragment;
 import ru.gcsales.app.presentation.view.map.MapFragment;
 import ru.gcsales.app.presentation.view.shops.ShopsFragment;

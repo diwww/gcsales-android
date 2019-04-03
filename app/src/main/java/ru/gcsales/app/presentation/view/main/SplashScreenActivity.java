@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import ru.gcsales.app.App;
 import ru.gcsales.app.R;
-import ru.gcsales.app.auth.AuthManager;
+import ru.gcsales.app.AuthManager;
 
 /**
  * Splash screen activity.

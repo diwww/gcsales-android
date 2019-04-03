@@ -32,6 +32,7 @@ public class ShopsFragment extends Fragment implements ShopsView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_shops, container, false);
+        View view = inflater.inflate(R.layout.fragment_shops, container, false);
+        return view;
     }
 }

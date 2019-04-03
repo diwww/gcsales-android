@@ -7,7 +7,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import ru.gcsales.app.auth.AuthManager;
+import ru.gcsales.app.AuthManager;
 
 /**
  * {@link Module} which provides Firebase authentication classes.
