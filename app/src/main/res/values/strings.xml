@@ -8,5 +8,6 @@
     <string name="shops">Shops</string>
     <string name="list">List</string>
     <string name="map">Map</string>
+    <string name="loading_error">Error loading data</string>
 
 </resources>

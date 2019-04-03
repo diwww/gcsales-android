@@ -9,4 +9,6 @@
     <dimen name="margin_padding_size_xlarge">32dp</dimen>
     <dimen name="margin_padding_size_xxlarge">40dp</dimen>
 
+    <dimen name="shop_logo_size">64dp</dimen>
+
 </resources>

@@ -2,9 +2,11 @@ package ru.gcsales.app;
 
 import android.app.Application;
 
-import ru.gcsales.app.dagger.AppComponent;
-import ru.gcsales.app.dagger.AppModule;
-import ru.gcsales.app.dagger.DaggerAppComponent;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import ru.gcsales.app.dagger.app.AppComponent;
+import ru.gcsales.app.dagger.app.AppModule;
+import ru.gcsales.app.dagger.app.DaggerAppComponent;
 
 /**
  * Main {@link Application}.
@@ -24,7 +26,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         sComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
+                .appModule(new AppModule(this, FirebaseFirestore.getInstance()))
                 .build();
     }
 }
