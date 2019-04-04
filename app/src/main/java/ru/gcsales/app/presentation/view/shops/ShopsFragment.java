@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,7 +40,7 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView {
     Provider<ShopsPresenter> mPresenterProvider;
 
     @InjectPresenter
-    ShopsPresenter mShopsPresenter;
+    ShopsPresenter mPresenter;
 
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
@@ -77,9 +76,9 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView {
     }
 
     @Override
-    public void showError(Exception e) {
+    public void showError(Throwable throwable) {
         Toast.makeText(getActivity(), R.string.loading_error, Toast.LENGTH_SHORT).show();
-        Log.e(TAG, e.toString());
+        Log.e(TAG, throwable.toString());
     }
 
     @Override

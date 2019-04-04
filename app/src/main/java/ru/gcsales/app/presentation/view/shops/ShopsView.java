@@ -24,9 +24,9 @@ public interface ShopsView extends MvpView {
     /**
      * Shows an error message.
      *
-     * @param e exception object
+     * @param throwable exception object
      */
-    void showError(Exception e);
+    void showError(Throwable throwable);
 
     /**
      * Sets the list of shops.

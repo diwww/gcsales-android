@@ -4,16 +4,12 @@ import android.support.annotation.NonNull;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import ru.gcsales.app.data.model.Shop;
 import ru.gcsales.app.data.repository.ShopsRepository;
 import ru.gcsales.app.presentation.view.shops.ShopsView;
@@ -35,23 +31,19 @@ public class ShopsPresenter extends MvpPresenter<ShopsView> {
 
     @Override
     protected void onFirstViewAttach() {
-        getViewState().showProgress(true);
-        mRepository.getShops()
-                .addOnSuccessListener(this::onShopsLoaded)
-                .addOnCompleteListener(__ -> getViewState().showProgress(false))
-                .addOnFailureListener(this::onError);
+        Disposable disposable = mRepository.getShops()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(__ -> getViewState().showProgress(true))
+                .doOnEvent((__, ___) -> getViewState().showProgress(false))
+                .subscribe(this::onShopsLoaded, this::onError);
     }
 
-    private void onShopsLoaded(QuerySnapshot snapshots) {
-        List<Shop> shops = new ArrayList<>();
-        for (QueryDocumentSnapshot snapshot : snapshots) {
-            Shop shop = snapshot.toObject(Shop.class);
-            shops.add(shop);
-        }
+    private void onShopsLoaded(List<Shop> shops) {
         getViewState().setShops(shops);
     }
 
-    private void onError(Exception e) {
-        getViewState().showError(e);
+    private void onError(Throwable throwable) {
+        getViewState().showError(throwable);
     }
 }
