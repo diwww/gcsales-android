@@ -25,6 +25,7 @@ import ru.gcsales.app.App;
 import ru.gcsales.app.R;
 import ru.gcsales.app.data.model.Shop;
 import ru.gcsales.app.presentation.presenter.shops.ShopsPresenter;
+import ru.gcsales.app.presentation.view.ItemClickListener;
 
 /**
  * Fragment which contains available shops.
@@ -32,7 +33,7 @@ import ru.gcsales.app.presentation.presenter.shops.ShopsPresenter;
  * @author Maxim Surovtsev
  * @since 01/04/2019
  */
-public class ShopsFragment extends MvpAppCompatFragment implements ShopsView {
+public class ShopsFragment extends MvpAppCompatFragment implements ShopsView, ItemClickListener<Shop> {
 
     public static final String TAG = "ShopsFragment";
 
@@ -86,6 +87,12 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView {
         mAdapter.setShops(shops);
     }
 
+    @Override
+    public void onItemClicked(Shop item) {
+        // TODO: start activity
+        Toast.makeText(this.getActivity(), item.toString(), Toast.LENGTH_SHORT).show();
+    }
+
     @ProvidePresenter
     ShopsPresenter providePresenter() {
         return mPresenterProvider.get();
@@ -94,7 +101,7 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView {
     private void initViews(View view) {
         mProgressBar = view.findViewById(R.id.progress_bar);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mAdapter = new ShopsAdapter();
+        mAdapter = new ShopsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
     }
 }

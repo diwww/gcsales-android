@@ -24,9 +24,18 @@
         android:layout_marginEnd="@dimen/margin_padding_size_medium"
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:layout_marginTop="@dimen/margin_padding_size_medium"
-        tools:text="Дикси"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_logo"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Дикси"/>
+
+    <View
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="@dimen/divider_height"
+        android:layout_marginStart="@dimen/margin_padding_size_xlarge"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

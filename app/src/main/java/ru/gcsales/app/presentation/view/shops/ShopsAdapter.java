@@ -15,6 +15,7 @@ import java.util.List;
 
 import ru.gcsales.app.R;
 import ru.gcsales.app.data.model.Shop;
+import ru.gcsales.app.presentation.view.ItemClickListener;
 
 /**
  * Recycler view adapter for displaying shops.
@@ -25,8 +26,10 @@ import ru.gcsales.app.data.model.Shop;
 public class ShopsAdapter extends RecyclerView.Adapter<ShopsAdapter.ShopViewHolder> {
 
     private final List<Shop> mShops;
+    private final ItemClickListener<Shop> mListener;
 
-    public ShopsAdapter() {
+    public ShopsAdapter(@NonNull ItemClickListener<Shop> listener) {
+        mListener = listener;
         mShops = new ArrayList<>();
     }
 
@@ -39,7 +42,7 @@ public class ShopsAdapter extends RecyclerView.Adapter<ShopsAdapter.ShopViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ShopViewHolder holder, int position) {
-        holder.bind(mShops.get(position));
+        holder.bind(mShops.get(position), mListener);
     }
 
     @Override
@@ -55,20 +58,23 @@ public class ShopsAdapter extends RecyclerView.Adapter<ShopsAdapter.ShopViewHold
 
     public static class ShopViewHolder extends RecyclerView.ViewHolder {
 
+        private final View mRootView;
         private final TextView mNameTextView;
         private final ImageView mLogoImageView;
 
         public ShopViewHolder(@NonNull View itemView) {
             super(itemView);
+            mRootView = itemView;
             mNameTextView = itemView.findViewById(R.id.text_name);
             mLogoImageView = itemView.findViewById(R.id.image_logo);
         }
 
-        public void bind(Shop shop) {
+        public void bind(@NonNull Shop shop, @NonNull ItemClickListener<Shop> listener) {
             mNameTextView.setText(shop.getName());
             Glide.with(mLogoImageView.getContext())
                     .load(shop.getImageUrl())
                     .into(mLogoImageView);
+            mRootView.setOnClickListener(v -> listener.onItemClicked(shop));
         }
     }
 }

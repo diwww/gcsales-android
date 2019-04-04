@@ -2,7 +2,6 @@ package ru.gcsales.app.data.repository;
 
 import android.support.annotation.NonNull;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Maybe;
-import io.reactivex.functions.Function;
 import ru.gcsales.app.data.model.Shop;
 
 /**

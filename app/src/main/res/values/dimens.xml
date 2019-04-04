@@ -10,5 +10,6 @@
     <dimen name="margin_padding_size_xxlarge">40dp</dimen>
 
     <dimen name="shop_logo_size">64dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
 
 </resources>
