@@ -4,10 +4,10 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import ru.gcsales.app.dagger.shops.ShopsModule;
-import ru.gcsales.app.presentation.view.main.MainActivity;
-import ru.gcsales.app.presentation.view.main.SignInActivity;
-import ru.gcsales.app.presentation.view.main.SplashScreenActivity;
+import ru.gcsales.app.presentation.view.AppActivity;
+import ru.gcsales.app.presentation.view.main.MainFlowFragment;
 import ru.gcsales.app.presentation.view.shops.ShopsFragment;
+import ru.gcsales.app.presentation.view.signin.SignInFlowFragment;
 
 /**
  * Main dagger {@link Component component} of the application.
@@ -24,11 +24,11 @@ import ru.gcsales.app.presentation.view.shops.ShopsFragment;
 @Singleton
 public interface AppComponent {
 
-    void inject(SplashScreenActivity activity);
+    void inject(AppActivity activity);
 
-    void inject(SignInActivity activity);
+    void inject(SignInFlowFragment fragment);
 
-    void inject(MainActivity activity);
+    void inject(MainFlowFragment fragment);
 
-    void inject(ShopsFragment shopsFragment);
+    void inject(ShopsFragment fragment);
 }

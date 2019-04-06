@@ -1,13 +1,14 @@
-package ru.gcsales.app.presentation.view.main;
+package ru.gcsales.app.presentation.view.signin;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -19,46 +20,47 @@ import java.util.Arrays;
 import java.util.List;
 
 import ru.gcsales.app.R;
+import ru.gcsales.app.presentation.view.main.MainFlowFragment;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
- * Sign in activity.
- * This activity is launched if the user is not signed in.
+ * Sign in flow fragment.
+ * This fragment is displayed if the user is not signed in.
  * There is a single button which initiates the sign in flow.
  *
  * @author Maxim Surovtsev
- * @since 31/03/2019
+ * @since 06/04/2019
  */
-public class SignInActivity extends AppCompatActivity {
+public class SignInFlowFragment extends Fragment {
 
     private static final int RC_SIGN_IN = 111;
 
-    private View mRoot;
+    private View mRootView;
     private Button mSignInButton;
 
     /**
-     * Creates a new intent to launch this activity.
+     * Creates a new instance of this fragment.
      *
-     * @param context context
-     * @return valid {@link Intent} instance
+     * @return new fragment instance
      */
-    public static Intent newIntent(@NonNull Context context) {
-        return new Intent(context, SignInActivity.class);
+    public static SignInFlowFragment newInstance() {
+        SignInFlowFragment fragment = new SignInFlowFragment();
+        return fragment;
     }
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
-
-        mRoot = findViewById(R.id.root);
-
-        mSignInButton = findViewById(R.id.button_sign_in);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
+        mRootView = view.findViewById(R.id.root);
+        mSignInButton = view.findViewById(R.id.button_sign_in);
         mSignInButton.setOnClickListener(v -> startSignInFlow());
+        return view;
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RC_SIGN_IN) {
             handleSignInResponse(resultCode, data);
         }
@@ -68,9 +70,9 @@ public class SignInActivity extends AppCompatActivity {
         IdpResponse response = IdpResponse.fromResultIntent(data);
 
         if (resultCode == RESULT_OK) {
-            startMainActivity();
+            startMainFlow();
         } else {
-            mRoot.setVisibility(View.VISIBLE);
+            mRootView.setVisibility(View.VISIBLE);
 
             if (response == null) {
                 showToast(R.string.sign_in_cancelled);
@@ -98,15 +100,14 @@ public class SignInActivity extends AppCompatActivity {
                         .build(),
                 RC_SIGN_IN);
 
-        mRoot.setVisibility(View.INVISIBLE);
+        mRootView.setVisibility(View.INVISIBLE);
     }
 
-    private void startMainActivity() {
-        startActivity(MainActivity.newIntent(this));
-        finish();
+    private void startMainFlow() {
+        getFragmentManager().beginTransaction().replace(R.id.app_container, MainFlowFragment.newInstance()).commit();
     }
 
     private void showToast(@StringRes int textId) {
-        Toast.makeText(this, textId, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), textId, Toast.LENGTH_SHORT).show();
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import javax.inject.Provider;
 import ru.gcsales.app.App;
 import ru.gcsales.app.R;
 import ru.gcsales.app.data.model.Shop;
+import ru.gcsales.app.presentation.Router;
 import ru.gcsales.app.presentation.presenter.shops.ShopsPresenter;
 import ru.gcsales.app.presentation.view.ItemClickListener;
 
@@ -37,6 +39,8 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView, It
 
     public static final String TAG = "ShopsFragment";
 
+    @Inject
+    Router mRouter;
     @Inject
     Provider<ShopsPresenter> mPresenterProvider;
 
@@ -90,6 +94,7 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView, It
     @Override
     public void onItemClicked(Shop item) {
         // TODO: start activity
+        mRouter.startItemsFlow(getActivity().getSupportFragmentManager());
         Toast.makeText(this.getActivity(), item.toString(), Toast.LENGTH_SHORT).show();
     }
 

@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import ru.gcsales.app.AuthManager;
+import ru.gcsales.app.presentation.Router;
 
 /**
  * {@link Module} which provides global app dependencies.
@@ -32,6 +33,12 @@ public class AppModule {
     @Singleton
     public Context provideContext() {
         return mContext;
+    }
+
+    @Provides
+    @Singleton
+    public Router provideRouter() {
+        return new Router();
     }
 
     @Provides
