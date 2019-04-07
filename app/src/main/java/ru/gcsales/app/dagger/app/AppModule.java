@@ -1,7 +1,7 @@
 package ru.gcsales.app.dagger.app;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 

@@ -1,7 +1,7 @@
 package ru.gcsales.app;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.Task;
