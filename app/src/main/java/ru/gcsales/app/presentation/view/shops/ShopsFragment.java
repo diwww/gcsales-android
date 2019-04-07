@@ -2,10 +2,6 @@ package ru.gcsales.app.presentation.view.shops;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +13,16 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import ru.gcsales.app.App;
 import ru.gcsales.app.R;
 import ru.gcsales.app.data.model.Shop;
@@ -61,7 +62,7 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView, It
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NotNull Context context) {
         App.getComponent().inject(this);
         super.onAttach(context);
     }
@@ -93,8 +94,7 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView, It
 
     @Override
     public void onItemClicked(Shop item) {
-        // TODO: start activity
-        mRouter.startItemsFlow(getActivity().getSupportFragmentManager());
+        mRouter.startItemsFlow(getActivity());
         Toast.makeText(this.getActivity(), item.toString(), Toast.LENGTH_SHORT).show();
     }
 

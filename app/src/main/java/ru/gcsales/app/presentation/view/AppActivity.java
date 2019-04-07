@@ -1,6 +1,7 @@
 package ru.gcsales.app.presentation.view;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import javax.inject.Inject;
@@ -30,9 +31,9 @@ public class AppActivity extends AppCompatActivity {
         App.getComponent().inject(this);
 
         if (mAuthManager.isSignedIn()) {
-            mRouter.startMainFlow(getSupportFragmentManager());
+            mRouter.startMainFlow(this);
         } else {
-            mRouter.startSignInFlow(getSupportFragmentManager());
+            mRouter.startSignInFlow(this);
         }
     }
 }

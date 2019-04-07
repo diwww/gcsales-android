@@ -2,20 +2,26 @@ package ru.gcsales.app.presentation.view.main;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import ru.gcsales.app.App;
 import ru.gcsales.app.AuthManager;
 import ru.gcsales.app.R;
@@ -30,14 +36,16 @@ import ru.gcsales.app.presentation.view.shops.ShopsFragment;
  * @author Maxim Surovtsev
  * @since 30/03/2019
  */
-public class MainFlowFragment extends Fragment {
-
-    private static final String TAG = "MainActivity";
+public class MainFlowFragment extends Fragment implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     @Inject
     AuthManager mAuthManager;
     @Inject
     Router mRouter;
+
+    private ShopsFragment mShopsFragment;
+    private ListFragment mListFragment;
+    private MapFragment mMapFragment;
 
     /**
      * Creates a new instance of this fragment.
@@ -49,9 +57,9 @@ public class MainFlowFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onAttach(@NotNull Context context) {
         App.getComponent().inject(this);
+        super.onAttach(context);
     }
 
     @Nullable
@@ -63,51 +71,65 @@ public class MainFlowFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        loadFragments();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initFragments();
+        displayFragment(mShopsFragment);
     }
 
-    private void initViews(View view) {
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Fragment fragment = null;
+        switch (item.getItemId()) {
+            case R.id.navigation_shops:
+                fragment = mShopsFragment;
+                break;
+            case R.id.navigation_list:
+                fragment = mListFragment;
+                break;
+            case R.id.navigation_map:
+                fragment = mMapFragment;
+                break;
+            default:
+                fragment = mShopsFragment;
+        }
+        displayFragment(fragment);
+        return true;
+    }
+
+    private void initViews(@NonNull View view) {
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         BottomNavigationView bottomNavigation = view.findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(new OnNavigationItemSelectedListener());
+        bottomNavigation.setOnNavigationItemSelectedListener(this);
     }
 
-    private void loadFragments() {
-
-
-        getChildFragmentManager()
-                .beginTransaction()
-                .add(R.id.container, ShopsFragment.newInstance())
-                .commit();
+    private void initFragments() {
+        mShopsFragment = ShopsFragment.newInstance();
+        mListFragment = ListFragment.newInstance();
+        mMapFragment = MapFragment.newInstance();
     }
 
-    private class OnNavigationItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {
+    /**
+     * Displays given fragment and hides other fragments.
+     *
+     * @param fragment fragment to display
+     */
+    private void displayFragment(@NonNull Fragment fragment) {
+        FragmentManager fm = getChildFragmentManager();
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            FragmentManager fm = getChildFragmentManager();
-            switch (item.getItemId()) {
-                case R.id.navigation_shops:
-                    fm.beginTransaction()
-                            .replace(R.id.container, ShopsFragment.newInstance())
-                            .addToBackStack(null)
-                            .commit();
-                    break;
-                case R.id.navigation_list:
-                    fm.beginTransaction()
-                            .replace(R.id.container, ListFragment.newInstance())
-                            .commit();
-                    break;
-                case R.id.navigation_map:
-                    fm.beginTransaction()
-                            .replace(R.id.container, MapFragment.newInstance())
-                            .commit();
-                    break;
-            }
+        List<Fragment> addedFragments = fm.getFragments();
+        addedFragments.remove(fragment);
 
-            return true;
+        FragmentTransaction transaction = fm.beginTransaction();
+        for (Fragment f : addedFragments) {
+            transaction.hide(f);
         }
+        if (fragment.isAdded()) {
+            transaction.show(fragment);
+        } else {
+            transaction.add(R.id.container, fragment);
+        }
+        transaction.commit();
     }
 }

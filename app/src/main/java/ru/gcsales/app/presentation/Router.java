@@ -1,6 +1,8 @@
 package ru.gcsales.app.presentation;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import ru.gcsales.app.R;
@@ -16,21 +18,27 @@ import ru.gcsales.app.presentation.view.signin.SignInFlowFragment;
  */
 public class Router {
 
-    public void startMainFlow(@NonNull FragmentManager fm) {
-        fm.beginTransaction()
+    public void startMainFlow(@NonNull FragmentActivity activity) {
+        activity.getSupportFragmentManager()
+                .beginTransaction()
                 .replace(R.id.app_container, MainFlowFragment.newInstance())
                 .commit();
     }
 
-    public void startSignInFlow(@NonNull FragmentManager fm) {
-        fm.beginTransaction()
+    public void startSignInFlow(@NonNull FragmentActivity activity) {
+        activity.getSupportFragmentManager()
+                .beginTransaction()
                 .replace(R.id.app_container, SignInFlowFragment.newInstance())
                 .commit();
     }
 
-    public void startItemsFlow(@NonNull FragmentManager fm) {
+    public void startItemsFlow(@NonNull FragmentActivity activity) {
+        FragmentManager fm = activity.getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.app_container);
+
         fm.beginTransaction()
-                .replace(R.id.app_container, ItemsFlowFragment.newInstance())
+                .add(R.id.app_container, ItemsFlowFragment.newInstance())
+                .hide(fragment)
                 .addToBackStack(null)
                 .commit();
     }
