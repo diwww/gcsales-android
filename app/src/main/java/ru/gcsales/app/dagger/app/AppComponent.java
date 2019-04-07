@@ -3,8 +3,10 @@ package ru.gcsales.app.dagger.app;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import ru.gcsales.app.dagger.items.ItemsModule;
 import ru.gcsales.app.dagger.shops.ShopsModule;
 import ru.gcsales.app.presentation.view.AppActivity;
+import ru.gcsales.app.presentation.view.items.ItemsFlowFragment;
 import ru.gcsales.app.presentation.view.main.MainFlowFragment;
 import ru.gcsales.app.presentation.view.shops.ShopsFragment;
 import ru.gcsales.app.presentation.view.signin.SignInFlowFragment;
@@ -18,7 +20,8 @@ import ru.gcsales.app.presentation.view.signin.SignInFlowFragment;
 @Component(modules = {
         AppModule.class,
         // region Feature modules
-        ShopsModule.class
+        ShopsModule.class,
+        ItemsModule.class
         // endregion
 })
 @Singleton
@@ -31,4 +34,6 @@ public interface AppComponent {
     void inject(MainFlowFragment fragment);
 
     void inject(ShopsFragment fragment);
+
+    void inject(ItemsFlowFragment fragment);
 }

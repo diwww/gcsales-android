@@ -9,7 +9,13 @@
     <dimen name="margin_padding_size_xlarge">32dp</dimen>
     <dimen name="margin_padding_size_xxlarge">40dp</dimen>
 
+    <dimen name="shop_item_height">96dp</dimen>
     <dimen name="shop_logo_size">64dp</dimen>
+    <dimen name="item_item_height">96dp</dimen>
+    <dimen name="item_logo_size">64dp</dimen>
+    <dimen name="add_button_size">32dp</dimen>
+
+
     <dimen name="divider_height">1dp</dimen>
 
 </resources>

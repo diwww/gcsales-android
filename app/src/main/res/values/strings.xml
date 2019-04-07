@@ -9,5 +9,6 @@
     <string name="list">List</string>
     <string name="map">Map</string>
     <string name="loading_error">Error loading data</string>
+    <string name="undefined_text">undefined</string>
 
 </resources>

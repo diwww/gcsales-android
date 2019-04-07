@@ -88,14 +88,13 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView, It
     }
 
     @Override
-    public void setShops(List<Shop> shops) {
+    public void setShops(@NotNull List<Shop> shops) {
         mAdapter.setShops(shops);
     }
 
     @Override
     public void onItemClicked(Shop item) {
-        mRouter.startItemsFlow(getActivity());
-        Toast.makeText(this.getActivity(), item.toString(), Toast.LENGTH_SHORT).show();
+        mRouter.startItemsFlow(getActivity(), item);
     }
 
     @ProvidePresenter

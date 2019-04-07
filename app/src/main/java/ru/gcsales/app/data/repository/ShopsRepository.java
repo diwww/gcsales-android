@@ -27,19 +27,21 @@ public class ShopsRepository extends RxFirestoreRepository {
     }
 
     /**
-     * Gets shops
+     * Gets shops.
      *
-     * @return task with list of shops
+     * @return {@link Maybe} with list of shops
      */
     public Maybe<List<Shop>> getShops() {
         return getCollection(PATH)
                 .map(this::convertQuerySnapshot);
     }
 
+    @NonNull
     private List<Shop> convertQuerySnapshot(@NonNull QuerySnapshot querySnapshot) {
         List<Shop> shops = new ArrayList<>(querySnapshot.size());
         for (QueryDocumentSnapshot snapshot : querySnapshot) {
             Shop shop = snapshot.toObject(Shop.class);
+            shop.setId(snapshot.getId());
             shops.add(shop);
         }
         return shops;

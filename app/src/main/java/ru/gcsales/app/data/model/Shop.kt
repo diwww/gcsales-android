@@ -1,8 +1,11 @@
 package ru.gcsales.app.data.model
 
+import java.io.Serializable
+
 /**
  * Shop model.
  *
+ * @property id id of the shop
  * @property name name of the shop
  * @property imageUrl url of shop logo
  *
@@ -10,10 +13,12 @@ package ru.gcsales.app.data.model
  * @since 03/04/2019
  */
 data class Shop(
-        val name: String,
-        val imageUrl: String
-) {
+        var id: String,
+        var name: String,
+        var imageUrl: String
+) : Serializable {
     constructor() : this(
+            "",
             "",
             ""
     )

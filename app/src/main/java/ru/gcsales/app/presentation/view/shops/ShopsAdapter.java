@@ -2,6 +2,7 @@ package ru.gcsales.app.presentation.view.shops;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class ShopsAdapter extends RecyclerView.Adapter<ShopsAdapter.ShopViewHold
         return mShops.size();
     }
 
-    public void setShops(List<Shop> shops) {
+    public void setShops(@NonNull List<Shop> shops) {
         mShops.clear();
         mShops.addAll(shops);
         notifyDataSetChanged();
@@ -66,7 +67,7 @@ public class ShopsAdapter extends RecyclerView.Adapter<ShopsAdapter.ShopViewHold
             super(itemView);
             mRootView = itemView;
             mNameTextView = itemView.findViewById(R.id.text_name);
-            mLogoImageView = itemView.findViewById(R.id.image_logo);
+            mLogoImageView = itemView.findViewById(R.id.image);
         }
 
         public void bind(@NonNull Shop shop, @NonNull ItemClickListener<Shop> listener) {
