@@ -3,6 +3,7 @@
 
     <dimen name="zero_dp">0dp</dimen>
 
+    <dimen name="margin_padding_size_xsmall">4dp</dimen>
     <dimen name="margin_padding_size_small">8dp</dimen>
     <dimen name="margin_padding_size_medium">16dp</dimen>
     <dimen name="margin_padding_size_large">24dp</dimen>
@@ -11,11 +12,12 @@
 
     <dimen name="shop_item_height">96dp</dimen>
     <dimen name="shop_logo_size">64dp</dimen>
-    <dimen name="item_item_height">96dp</dimen>
-    <dimen name="item_logo_size">64dp</dimen>
-    <dimen name="add_button_size">32dp</dimen>
+    <dimen name="item_item_height">160dp</dimen>
+    <dimen name="item_logo_size">128dp</dimen>
+    <dimen name="add_button_size">40dp</dimen>
 
 
     <dimen name="divider_height">1dp</dimen>
+    <dimen name="image_border_width">1dp</dimen>
 
 </resources>

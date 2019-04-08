@@ -11,4 +11,10 @@
     <string name="loading_error">Error loading data</string>
     <string name="undefined_text">undefined</string>
 
+    <string name="price">%.2f \u20BD</string>
+
+
+    <!--TalkBack-->
+    <string name="talkback_add_button">Add to list</string>
+
 </resources>

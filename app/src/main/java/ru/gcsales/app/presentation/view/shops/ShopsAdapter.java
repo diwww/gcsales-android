@@ -74,6 +74,7 @@ public class ShopsAdapter extends RecyclerView.Adapter<ShopsAdapter.ShopViewHold
             mNameTextView.setText(shop.getName());
             Glide.with(mLogoImageView.getContext())
                     .load(shop.getImageUrl())
+                    .placeholder(R.drawable.shop_placeholder)
                     .into(mLogoImageView);
             mRootView.setOnClickListener(v -> listener.onItemClicked(shop));
         }

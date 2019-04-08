@@ -1,14 +1,15 @@
 package ru.gcsales.app.presentation.view.items;
 
+import android.content.res.Resources;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.jetbrains.annotations.NonNls;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         private final TextView mOldPriceTextView;
         private final TextView mNewPriceTextView;
         private final ImageButton mAddButton;
+        private final Resources mResources;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,11 +75,21 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
             mOldPriceTextView = itemView.findViewById(R.id.text_old_price);
             mNewPriceTextView = itemView.findViewById(R.id.text_new_price);
             mAddButton = itemView.findViewById(R.id.button_add);
+            mResources = itemView.getResources();
         }
 
         public void bind(@NonNull Item item, @NonNull ItemClickListener<Item> listener) {
             mNameTextView.setText(item.getName());
+            mOldPriceTextView.setText(mResources.getString(R.string.price, item.getOldPrice()));
+            mOldPriceTextView.setPaintFlags(mOldPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            mNewPriceTextView.setText(mResources.getString(R.string.price, item.getNewPrice()));
+
             // TODO: other bindings
+
+            Glide.with(mImageView.getContext())
+                    .load(item.getImageUrl())
+                    .placeholder(R.drawable.item_placeholder)
+                    .into(mImageView);
             mAddButton.setOnClickListener(v -> listener.onItemClicked(item));
         }
     }
