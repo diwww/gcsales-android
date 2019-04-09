@@ -1,15 +1,17 @@
 package ru.gcsales.app.dagger.app;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import ru.gcsales.app.AuthManager;
+import ru.gcsales.app.data.manager.AuthManager;
 import ru.gcsales.app.presentation.Router;
 
 /**
@@ -23,10 +25,12 @@ public class AppModule {
 
     private final Context mContext;
     private final FirebaseFirestore mFirestore;
+    private final FirebaseAuth mAuth;
 
-    public AppModule(@NonNull Context context, @NonNull FirebaseFirestore firestore) {
+    public AppModule(@NonNull Context context, @NonNull FirebaseFirestore firestore, @NonNull FirebaseAuth auth) {
         mContext = context;
         mFirestore = firestore;
+        mAuth = auth;
     }
 
     @Provides
@@ -43,8 +47,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public AuthManager provideAuthManager(@NonNull Context context) {
-        return new AuthManager(context);
+    public AuthManager provideAuthManager(@NonNull Context context, @NonNull FirebaseAuth auth) {
+        return new AuthManager(context, auth);
     }
 
     @Provides
@@ -52,4 +56,11 @@ public class AppModule {
     public FirebaseFirestore provideFirestore() {
         return mFirestore;
     }
+
+    @Provides
+    @Singleton
+    public FirebaseAuth provideFirebaseAuth() {
+        return mAuth;
+    }
+
 }

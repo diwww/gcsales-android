@@ -2,6 +2,7 @@ package ru.gcsales.app;
 
 import android.app.Application;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import ru.gcsales.app.dagger.app.AppComponent;
@@ -26,7 +27,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         sComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(this, FirebaseFirestore.getInstance()))
+                .appModule(new AppModule(this, FirebaseFirestore.getInstance(), FirebaseAuth.getInstance()))
                 .build();
     }
 }

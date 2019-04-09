@@ -23,7 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import ru.gcsales.app.App;
-import ru.gcsales.app.AuthManager;
+import ru.gcsales.app.data.manager.AuthManager;
 import ru.gcsales.app.R;
 import ru.gcsales.app.presentation.Router;
 import ru.gcsales.app.presentation.view.list.ListFragment;

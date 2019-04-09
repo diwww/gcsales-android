@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import dagger.Module;
 import dagger.Provides;
 import ru.gcsales.app.data.repository.ItemsRepository;
+import ru.gcsales.app.data.repository.ListRepository;
 import ru.gcsales.app.presentation.presenter.items.ItemsPresenter;
 
 /**
@@ -28,7 +29,7 @@ public class ItemsModule {
 
     // FIXME: unscoped
     @Provides
-    public ItemsPresenter provideItemsPresenter(@NonNull ItemsRepository repository) {
-        return new ItemsPresenter(repository);
+    public ItemsPresenter provideItemsPresenter(@NonNull ItemsRepository itemsRepository, @NonNull ListRepository listRepository) {
+        return new ItemsPresenter(itemsRepository, listRepository);
     }
 }

@@ -11,6 +11,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.gcsales.app.data.model.Item;
 import ru.gcsales.app.data.repository.ItemsRepository;
+import ru.gcsales.app.data.repository.ListRepository;
 import ru.gcsales.app.presentation.view.items.ItemsView;
 
 /**
@@ -22,23 +23,39 @@ import ru.gcsales.app.presentation.view.items.ItemsView;
 @InjectViewState
 public class ItemsPresenter extends MvpPresenter<ItemsView> {
 
-    private final ItemsRepository mRepository;
+    private final ItemsRepository mItemsRepository;
+    private final ListRepository mListRepository;
 
     private String mShopId;
 
-    public ItemsPresenter(@NonNull ItemsRepository repository) {
-        mRepository = repository;
+    public ItemsPresenter(@NonNull ItemsRepository itemsRepository, @NonNull ListRepository listRepository) {
+        mItemsRepository = itemsRepository;
+        mListRepository = listRepository;
     }
 
     @Override
     protected void onFirstViewAttach() {
 
-        Disposable disposable = mRepository.getItems(mShopId)
+        Disposable disposable = mItemsRepository.getItems(mShopId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(__ -> getViewState().showProgress(true))
                 .doOnEvent((__, ___) -> getViewState().showProgress(false))
                 .subscribe(this::onItemsLoaded, this::onError);
+    }
+
+    /**
+     * Add an item to the shopping list.
+     *
+     * @param item item to add
+     */
+    public void addToList(Item item) {
+        Disposable disposable = mListRepository.addItem(item)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(__ -> getViewState().showProgress(true))
+                .doOnEvent(__ -> getViewState().showProgress(false))
+                .subscribe(this::onItemAdded, this::onError);
     }
 
     public void setShopId(String shopId) {
@@ -47,6 +64,10 @@ public class ItemsPresenter extends MvpPresenter<ItemsView> {
 
     private void onItemsLoaded(List<Item> items) {
         getViewState().setItems(items);
+    }
+
+    private void onItemAdded() {
+        // TODO:
     }
 
     private void onError(Throwable throwable) {

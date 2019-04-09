@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import javax.inject.Inject;
 
 import ru.gcsales.app.App;
-import ru.gcsales.app.AuthManager;
+import ru.gcsales.app.data.manager.AuthManager;
 import ru.gcsales.app.R;
 import ru.gcsales.app.presentation.Router;
 

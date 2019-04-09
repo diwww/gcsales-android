@@ -1,5 +1,6 @@
 package ru.gcsales.app.data.model
 
+import com.google.firebase.firestore.Exclude
 import java.io.Serializable
 
 /**
@@ -13,7 +14,7 @@ import java.io.Serializable
  * @since 03/04/2019
  */
 data class Shop(
-        var id: String,
+        @get:Exclude var id: String,
         var name: String,
         var imageUrl: String
 ) : Serializable {

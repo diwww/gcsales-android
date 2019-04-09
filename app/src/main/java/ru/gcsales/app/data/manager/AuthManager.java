@@ -1,6 +1,7 @@
-package ru.gcsales.app;
+package ru.gcsales.app.data.manager;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.firebase.ui.auth.AuthUI;
@@ -24,17 +25,18 @@ import com.google.firebase.auth.FirebaseAuth;
 public class AuthManager {
 
     private final Context mContext;
+    private final FirebaseAuth mAuth;
 
-    public AuthManager(@NonNull Context context) {
+    public AuthManager(@NonNull Context context, @NonNull FirebaseAuth auth) {
         mContext = context;
+        mAuth = auth;
     }
 
     /**
      * Checks whether the user is signed in.
      */
     public boolean isSignedIn() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        return auth.getCurrentUser() != null;
+        return mAuth.getCurrentUser() != null;
     }
 
     /**

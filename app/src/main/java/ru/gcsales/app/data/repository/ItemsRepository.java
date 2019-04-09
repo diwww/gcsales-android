@@ -41,6 +41,7 @@ public class ItemsRepository extends RxFirestoreRepository {
         List<Item> items = new ArrayList<>(querySnapshot.size());
         for (QueryDocumentSnapshot snapshot : querySnapshot) {
             Item item = snapshot.toObject(Item.class);
+            item.setId(snapshot.getId());
             items.add(item);
         }
         return items;

@@ -104,7 +104,7 @@ public class ItemsFlowFragment extends MvpAppCompatFragment implements ItemsView
 
     @Override
     public void onItemClicked(Item item) {
-        // TODO
+        mPresenter.addToList(item);
     }
 
     @ProvidePresenter

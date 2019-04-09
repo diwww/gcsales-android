@@ -1,10 +1,11 @@
 package ru.gcsales.app.data.repository;
 
-import androidx.annotation.NonNull;
-
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
+import androidx.annotation.NonNull;
+import io.reactivex.Completable;
 import io.reactivex.Maybe;
 
 /**
@@ -42,6 +43,54 @@ public class RxFirestoreRepository {
                             emitter.onSuccess(querySnapshot);
                         }
                     })
+                    .addOnFailureListener(e -> {
+                        if (!emitter.isDisposed()) {
+                            emitter.onError(e);
+                        }
+                    });
+        });
+    }
+
+    /**
+     * Creates or overwrites document.
+     * <p>
+     * There is also {@link SetOptions} parameter which specifies how to set document.
+     * For example, {@link SetOptions#merge()} implies that the document will not be
+     * fully overwritten, only certain fields will be overwritten instead.
+     * </p>
+     *
+     * @param data    document data
+     * @param path    path to document
+     * @param options set options
+     * @return {@link Completable} with the result
+     */
+    @NonNull
+    public Completable setDocument(@NonNull String path, Object data, SetOptions options) {
+        return Completable.create(emitter -> {
+            mFirestore.document(path).set(data, options)
+                    .addOnSuccessListener(__ -> emitter.onComplete())
+                    .addOnFailureListener(e -> {
+                        if (!emitter.isDisposed()) {
+                            emitter.onError(e);
+                        }
+                    });
+        });
+    }
+
+    /**
+     * Adds a new document to the collection.
+     * <p>
+     * If this method is used, then document id will be auto-generated.
+     * </p>
+     *
+     * @param path path to the collection
+     * @param data document data
+     * @return {@link Completable} with the result.
+     */
+    public Completable addDocument(@NonNull String path, Object data) {
+        return Completable.create(emitter -> {
+            mFirestore.collection(path).add(data)
+                    .addOnSuccessListener(__ -> emitter.onComplete())
                     .addOnFailureListener(e -> {
                         if (!emitter.isDisposed()) {
                             emitter.onError(e);
