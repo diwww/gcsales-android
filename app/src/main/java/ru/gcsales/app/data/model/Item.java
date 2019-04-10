@@ -29,54 +29,48 @@ public class Item {
         return id;
     }
 
-    public Item setId(String id) {
+    public void setId(String id) {
         this.id = id;
-        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public Item setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
     public String getShop() {
         return shop;
     }
 
-    public Item setShop(String shop) {
+    public void setShop(String shop) {
         this.shop = shop;
-        return this;
     }
 
     public String getImageUrl() {
         return imageUrl;
     }
 
-    public Item setImageUrl(String imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-        return this;
     }
 
     public double getOldPrice() {
         return oldPrice;
     }
 
-    public Item setOldPrice(double oldPrice) {
+    public void setOldPrice(double oldPrice) {
         this.oldPrice = oldPrice;
-        return this;
     }
 
     public double getNewPrice() {
         return newPrice;
     }
 
-    public Item setNewPrice(double newPrice) {
+    public void setNewPrice(double newPrice) {
         this.newPrice = newPrice;
-        return this;
     }
 
     @Override

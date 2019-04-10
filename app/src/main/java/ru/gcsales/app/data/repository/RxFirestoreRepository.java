@@ -1,12 +1,22 @@
 package ru.gcsales.app.data.repository;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import androidx.annotation.NonNull;
 import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
+import io.reactivex.CompletableOnSubscribe;
 import io.reactivex.Maybe;
+import io.reactivex.MaybeEmitter;
+import io.reactivex.MaybeOnSubscribe;
 
 /**
  * RxJava wrapper for Firebase Firestore.
@@ -51,6 +61,25 @@ public class RxFirestoreRepository {
         });
     }
 
+    // TODO: jd
+    public Maybe<DocumentSnapshot> getDocument(@NonNull String path) {
+        return Maybe.create(emitter -> {
+            mFirestore.document(path).get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            emitter.onSuccess(documentSnapshot);
+                        } else {
+                            emitter.onComplete();
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        if (!emitter.isDisposed()) {
+                            emitter.onError(e);
+                        }
+                    });
+        });
+    }
+
     /**
      * Creates or overwrites document.
      * <p>
@@ -68,6 +97,20 @@ public class RxFirestoreRepository {
     public Completable setDocument(@NonNull String path, Object data, SetOptions options) {
         return Completable.create(emitter -> {
             mFirestore.document(path).set(data, options)
+                    .addOnSuccessListener(__ -> emitter.onComplete())
+                    .addOnFailureListener(e -> {
+                        if (!emitter.isDisposed()) {
+                            emitter.onError(e);
+                        }
+                    });
+        });
+    }
+
+    // TODO: jd
+    @NonNull
+    public Completable deleteDocument(@NonNull String path) {
+        return Completable.create(emitter -> {
+            mFirestore.document(path).delete()
                     .addOnSuccessListener(__ -> emitter.onComplete())
                     .addOnFailureListener(e -> {
                         if (!emitter.isDisposed()) {

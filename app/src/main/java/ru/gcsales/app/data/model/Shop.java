@@ -26,27 +26,24 @@ public class Shop implements Serializable {
         return id;
     }
 
-    public Shop setId(String id) {
+    public void setId(String id) {
         this.id = id;
-        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public Shop setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
     public String getImageUrl() {
         return imageUrl;
     }
 
-    public Shop setImageUrl(String imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-        return this;
     }
 
     @Override

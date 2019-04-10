@@ -33,23 +33,31 @@ public class ListEntry extends Item {
         return entry;
     }
 
+    public ListEntry incrementCount() {
+        mCount++;
+        return this;
+    }
+
+    public ListEntry decrementCount() {
+        mCount--;
+        return this;
+    }
+
     @ServerTimestamp
     public Date getTimestamp() {
         return mTimestamp;
     }
 
-    public ListEntry setTimestamp(Date timestamp) {
+    public void setTimestamp(Date timestamp) {
         mTimestamp = timestamp;
-        return this;
     }
 
     public int getCount() {
         return mCount;
     }
 
-    public ListEntry setCount(int count) {
+    public void setCount(int count) {
         mCount = count;
-        return this;
     }
 
     @Override
