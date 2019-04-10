@@ -7,6 +7,7 @@ import com.google.firebase.firestore.SetOptions;
 import androidx.annotation.NonNull;
 import io.reactivex.Completable;
 import ru.gcsales.app.data.model.Item;
+import ru.gcsales.app.data.model.ListEntry;
 
 /**
  * Repository for managing user's shopping list.
@@ -33,9 +34,8 @@ public class ListRepository extends RxFirestoreRepository {
      */
     @NonNull
     public Completable addItem(@NonNull Item item) {
-        // TODO: convert to ListEntry
         String uid = mAuth.getCurrentUser().getUid();
-        return setDocument(String.format(PATH, uid, item.getId()), item, SetOptions.merge());
-//        return addDocument(String.format(PATH, uid), item);
+        ListEntry entry = ListEntry.fromItem(item);
+        return setDocument(String.format(PATH, uid, entry.getId()), entry, SetOptions.merge());
     }
 }
