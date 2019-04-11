@@ -1,4 +1,4 @@
-package ru.gcsales.app.presentation.presenter.shops;
+package ru.gcsales.app.presentation.presenter;
 
 import androidx.annotation.NonNull;
 

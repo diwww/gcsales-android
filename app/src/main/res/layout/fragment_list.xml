@@ -5,11 +5,6 @@
              android:layout_height="match_parent"
              tools:context=".presentation.view.shops.ShopsFragment">
 
-    <TextView
-        android:id="@+id/text_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Shopping List"/>
+    <include layout="@layout/layout_recycler_progress"/>
 
 </FrameLayout>

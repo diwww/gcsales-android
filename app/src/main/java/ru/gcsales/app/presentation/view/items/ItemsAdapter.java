@@ -66,7 +66,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         private final TextView mOldPriceTextView;
         private final TextView mNewPriceTextView;
         private final ImageButton mAddButton;
-        private final Resources mResources;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,14 +74,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
             mOldPriceTextView = itemView.findViewById(R.id.text_old_price);
             mNewPriceTextView = itemView.findViewById(R.id.text_new_price);
             mAddButton = itemView.findViewById(R.id.button_add);
-            mResources = itemView.getResources();
         }
 
         public void bind(@NonNull Item item, @NonNull ItemClickListener<Item> listener) {
+            final Resources resources = itemView.getResources();
             mNameTextView.setText(item.getName());
-            mOldPriceTextView.setText(mResources.getString(R.string.price, item.getOldPrice()));
+            mOldPriceTextView.setText(resources.getString(R.string.price, item.getOldPrice()));
             mOldPriceTextView.setPaintFlags(mOldPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            mNewPriceTextView.setText(mResources.getString(R.string.price, item.getNewPrice()));
+            mNewPriceTextView.setText(resources.getString(R.string.price, item.getNewPrice()));
 
             // TODO: other bindings
 

@@ -1,4 +1,4 @@
-package ru.gcsales.app.presentation.presenter.items;
+package ru.gcsales.app.presentation.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;

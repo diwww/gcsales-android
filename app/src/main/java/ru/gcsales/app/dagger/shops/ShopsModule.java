@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import ru.gcsales.app.data.repository.ShopsRepository;
-import ru.gcsales.app.presentation.presenter.shops.ShopsPresenter;
+import ru.gcsales.app.presentation.presenter.ShopsPresenter;
 
 /**
  * {@link Module} which provides dependencies for shops screen.

@@ -17,7 +17,7 @@ import io.reactivex.Maybe;
  */
 public class RxFirestoreRepository {
 
-    private final FirebaseFirestore mFirestore;
+    protected final FirebaseFirestore mFirestore;
 
     public RxFirestoreRepository(@NonNull FirebaseFirestore firestore) {
         mFirestore = firestore;

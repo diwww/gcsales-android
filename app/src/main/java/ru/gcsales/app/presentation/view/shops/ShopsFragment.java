@@ -27,7 +27,7 @@ import ru.gcsales.app.App;
 import ru.gcsales.app.R;
 import ru.gcsales.app.data.model.Shop;
 import ru.gcsales.app.presentation.Router;
-import ru.gcsales.app.presentation.presenter.shops.ShopsPresenter;
+import ru.gcsales.app.presentation.presenter.ShopsPresenter;
 import ru.gcsales.app.presentation.view.ItemClickListener;
 
 /**
@@ -36,7 +36,7 @@ import ru.gcsales.app.presentation.view.ItemClickListener;
  * @author Maxim Surovtsev
  * @since 01/04/2019
  */
-public class ShopsFragment extends MvpAppCompatFragment implements ShopsView, ItemClickListener<Shop> {
+public class ShopsFragment extends MvpAppCompatFragment implements ShopsView {
 
     public static final String TAG = "ShopsFragment";
 
@@ -92,11 +92,6 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView, It
         mAdapter.setShops(shops);
     }
 
-    @Override
-    public void onItemClicked(Shop item) {
-        mRouter.startItemsFlow(getActivity(), item);
-    }
-
     @ProvidePresenter
     ShopsPresenter providePresenter() {
         return mPresenterProvider.get();
@@ -105,7 +100,7 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView, It
     private void initViews(View view) {
         mProgressBar = view.findViewById(R.id.progress_bar);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mAdapter = new ShopsAdapter(this);
+        mAdapter = new ShopsAdapter(item -> mRouter.startItemsFlow(getActivity(), item));
         mRecyclerView.setAdapter(mAdapter);
     }
 }

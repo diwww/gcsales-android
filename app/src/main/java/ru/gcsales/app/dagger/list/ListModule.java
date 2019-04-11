@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import dagger.Module;
 import dagger.Provides;
 import ru.gcsales.app.data.repository.ListRepository;
+import ru.gcsales.app.presentation.presenter.ListPresenter;
 
 /**
  * {@link Module} for providing dependencies for shopping list.
@@ -23,5 +24,10 @@ public class ListModule {
     @Singleton
     public ListRepository provideListRepository(@NonNull FirebaseFirestore firestore, @NonNull FirebaseAuth auth) {
         return new ListRepository(firestore, auth);
+    }
+
+    @Provides
+    public ListPresenter provideListPresenter(@NonNull ListRepository repository) {
+        return new ListPresenter(repository);
     }
 }

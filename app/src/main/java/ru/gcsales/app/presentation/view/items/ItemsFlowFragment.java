@@ -30,7 +30,7 @@ import ru.gcsales.app.R;
 import ru.gcsales.app.data.model.Item;
 import ru.gcsales.app.data.model.Shop;
 import ru.gcsales.app.presentation.Router;
-import ru.gcsales.app.presentation.presenter.items.ItemsPresenter;
+import ru.gcsales.app.presentation.presenter.ItemsPresenter;
 import ru.gcsales.app.presentation.view.ItemClickListener;
 
 /**
@@ -39,7 +39,7 @@ import ru.gcsales.app.presentation.view.ItemClickListener;
  * @author Maxim Surovtsev
  * @since 06/04/2019
  */
-public class ItemsFlowFragment extends MvpAppCompatFragment implements ItemsView, ItemClickListener<Item> {
+public class ItemsFlowFragment extends MvpAppCompatFragment implements ItemsView {
 
     public static final String TAG = "ItemsFlowFragment";
 
@@ -98,13 +98,8 @@ public class ItemsFlowFragment extends MvpAppCompatFragment implements ItemsView
     }
 
     @Override
-    public void setItems(@NonNull List<Item> items) {
+    public void setItems(@NotNull @NonNull List<Item> items) {
         mAdapter.setItems(items);
-    }
-
-    @Override
-    public void onItemClicked(Item item) {
-        mPresenter.addToList(item);
     }
 
     @ProvidePresenter
@@ -121,7 +116,7 @@ public class ItemsFlowFragment extends MvpAppCompatFragment implements ItemsView
         mToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         mProgressBar = view.findViewById(R.id.progress_bar);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mAdapter = new ItemsAdapter(this);
+        mAdapter = new ItemsAdapter(item -> mPresenter.addToList(item));
         mRecyclerView.setAdapter(mAdapter);
     }
 

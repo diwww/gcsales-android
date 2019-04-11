@@ -10,7 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 import ru.gcsales.app.data.repository.ItemsRepository;
 import ru.gcsales.app.data.repository.ListRepository;
-import ru.gcsales.app.presentation.presenter.items.ItemsPresenter;
+import ru.gcsales.app.presentation.presenter.ItemsPresenter;
 
 /**
  * {@link Module} which provides dependencies for items screen.
