@@ -1,7 +1,5 @@
 package ru.gcsales.app.data.repository;
 
-import android.util.Log;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -9,9 +7,6 @@ import com.google.firebase.firestore.SetOptions;
 
 import androidx.annotation.NonNull;
 import io.reactivex.Completable;
-import io.reactivex.Maybe;
-import io.reactivex.MaybeSource;
-import io.reactivex.functions.Function;
 import ru.gcsales.app.data.model.Item;
 import ru.gcsales.app.data.model.ListEntry;
 
@@ -64,6 +59,13 @@ public class ListRepository extends RxFirestoreRepository {
         return setDocument(String.format(PATH, uid, entry.getId()), entry.incrementCount(), SetOptions.merge());
     }
 
+    /**
+     * Decrements count of shopping list entry or
+     * deletes this entry if its count is less or equal to {@code 1}.
+     *
+     * @param entry shopping list entry
+     * @return {@link Completable} with the result
+     */
     @NonNull
     public Completable decrementCount(@NonNull ListEntry entry) {
         String uid = mAuth.getCurrentUser().getUid();

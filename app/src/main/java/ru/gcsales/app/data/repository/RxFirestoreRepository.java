@@ -1,22 +1,13 @@
 package ru.gcsales.app.data.repository;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import androidx.annotation.NonNull;
 import io.reactivex.Completable;
-import io.reactivex.CompletableEmitter;
-import io.reactivex.CompletableOnSubscribe;
 import io.reactivex.Maybe;
-import io.reactivex.MaybeEmitter;
-import io.reactivex.MaybeOnSubscribe;
 
 /**
  * RxJava wrapper for Firebase Firestore.
@@ -61,7 +52,12 @@ public class RxFirestoreRepository {
         });
     }
 
-    // TODO: jd
+    /**
+     * Gets the document at given path.
+     *
+     * @param path path to document
+     * @return {@link Maybe} with the result
+     */
     public Maybe<DocumentSnapshot> getDocument(@NonNull String path) {
         return Maybe.create(emitter -> {
             mFirestore.document(path).get()
@@ -106,20 +102,6 @@ public class RxFirestoreRepository {
         });
     }
 
-    // TODO: jd
-    @NonNull
-    public Completable deleteDocument(@NonNull String path) {
-        return Completable.create(emitter -> {
-            mFirestore.document(path).delete()
-                    .addOnSuccessListener(__ -> emitter.onComplete())
-                    .addOnFailureListener(e -> {
-                        if (!emitter.isDisposed()) {
-                            emitter.onError(e);
-                        }
-                    });
-        });
-    }
-
     /**
      * Adds a new document to the collection.
      * <p>
@@ -133,6 +115,25 @@ public class RxFirestoreRepository {
     public Completable addDocument(@NonNull String path, Object data) {
         return Completable.create(emitter -> {
             mFirestore.collection(path).add(data)
+                    .addOnSuccessListener(__ -> emitter.onComplete())
+                    .addOnFailureListener(e -> {
+                        if (!emitter.isDisposed()) {
+                            emitter.onError(e);
+                        }
+                    });
+        });
+    }
+
+    /**
+     * Deletes document at given path.
+     *
+     * @param path path to document
+     * @return {@link Completable} with the result
+     */
+    @NonNull
+    public Completable deleteDocument(@NonNull String path) {
+        return Completable.create(emitter -> {
+            mFirestore.document(path).delete()
                     .addOnSuccessListener(__ -> emitter.onComplete())
                     .addOnFailureListener(e -> {
                         if (!emitter.isDisposed()) {
