@@ -2,6 +2,7 @@ package ru.gcsales.app.data.model;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.google.firebase.firestore.Exclude;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -22,6 +23,7 @@ public class Shop implements Serializable {
     public Shop() {
     }
 
+    @Exclude
     public String getId() {
         return id;
     }

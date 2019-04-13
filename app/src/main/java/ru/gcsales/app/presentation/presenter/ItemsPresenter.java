@@ -7,6 +7,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.gcsales.app.data.model.Item;
@@ -23,6 +24,7 @@ import ru.gcsales.app.presentation.view.items.ItemsView;
 @InjectViewState
 public class ItemsPresenter extends MvpPresenter<ItemsView> {
 
+    private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private final ItemsRepository mItemsRepository;
     private final ListRepository mListRepository;
 
@@ -42,6 +44,13 @@ public class ItemsPresenter extends MvpPresenter<ItemsView> {
                 .doOnSubscribe(__ -> getViewState().showProgress(true))
                 .doOnEvent((__, ___) -> getViewState().showProgress(false))
                 .subscribe(this::onItemsLoaded, this::onError);
+        mCompositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mCompositeDisposable.dispose();
     }
 
     /**
@@ -56,6 +65,7 @@ public class ItemsPresenter extends MvpPresenter<ItemsView> {
                 .doOnSubscribe(__ -> getViewState().showProgress(true))
                 .doOnEvent(__ -> getViewState().showProgress(false))
                 .subscribe(this::onItemAdded, this::onError);
+        mCompositeDisposable.add(disposable);
     }
 
     public void setShopId(String shopId) {

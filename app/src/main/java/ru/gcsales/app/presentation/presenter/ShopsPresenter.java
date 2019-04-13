@@ -8,6 +8,7 @@ import com.arellomobile.mvp.MvpPresenter;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.gcsales.app.data.model.Shop;
@@ -23,6 +24,7 @@ import ru.gcsales.app.presentation.view.shops.ShopsView;
 @InjectViewState
 public class ShopsPresenter extends MvpPresenter<ShopsView> {
 
+    private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private final ShopsRepository mRepository;
 
     public ShopsPresenter(@NonNull ShopsRepository repository) {
@@ -37,6 +39,13 @@ public class ShopsPresenter extends MvpPresenter<ShopsView> {
                 .doOnSubscribe(__ -> getViewState().showProgress(true))
                 .doOnEvent((__, ___) -> getViewState().showProgress(false))
                 .subscribe(this::onShopsLoaded, this::onError);
+        mCompositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mCompositeDisposable.dispose();
     }
 
     private void onShopsLoaded(List<Shop> shops) {

@@ -3,21 +3,15 @@ package ru.gcsales.app.presentation.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import androidx.annotation.NonNull;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import ru.gcsales.app.data.model.ListEntry;
 import ru.gcsales.app.data.repository.ListRepository;
 import ru.gcsales.app.presentation.view.list.ListView;
@@ -31,56 +25,56 @@ import ru.gcsales.app.presentation.view.list.ListView;
 @InjectViewState
 public class ListPresenter extends MvpPresenter<ListView> {
 
+    private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+
     private final ListRepository mRepository;
-    private ListenerRegistration mListenerRegistration;
+    private Disposable mListenerDisposable;
 
     public ListPresenter(@NonNull ListRepository repository) {
         mRepository = repository;
     }
 
     @Override
-    protected void onFirstViewAttach() {
-        getViewState().showProgress(true);
+    public void onDestroy() {
+        mCompositeDisposable.dispose();
     }
 
     public void attachListener() {
-        mListenerRegistration = mRepository.addSnapshotListener((snapshots, e) -> {
-            if (e != null) {
-                ListPresenter.this.getViewState().showError(e);
-            }
-
-            List<ListEntry> entries = new ArrayList<>();
-            if (snapshots != null) {
-                for (QueryDocumentSnapshot snapshot : snapshots) {
-                    ListEntry entry = snapshot.toObject(ListEntry.class);
-                    entry.setId(snapshot.getId());
-                    entries.add(entry);
-                }
-            }
-            ListPresenter.this.getViewState().setEntries(entries);
-            getViewState().showProgress(false);
-        });
+        mListenerDisposable = mRepository.getUpdateObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(__ -> getViewState().showProgress(true))
+                .doOnNext(__ -> getViewState().showProgress(false))
+                .doOnTerminate(() -> getViewState().showProgress(false))
+                .subscribe(this::onEntriesLoaded, this::onError);
+        mCompositeDisposable.add(mListenerDisposable);
     }
 
     public void detachListener() {
-        mListenerRegistration.remove();
-        mListenerRegistration = null;
+        mListenerDisposable.dispose();
     }
-
 
     public void incrementCount(ListEntry entry) {
         Disposable disposable = mRepository.incrementCount(entry)
                 .subscribe(() -> {
-                }, throwable -> {
-                    getViewState().showError(throwable);
-                });
+                }, e -> getViewState().showError(e));
+        mCompositeDisposable.add(disposable);
     }
 
     public void decrementCount(ListEntry entry) {
         Disposable disposable = mRepository.decrementCount(entry)
                 .subscribe(() -> {
-                }, throwable -> {
-                    getViewState().showError(throwable);
+                }, e -> {
+                    getViewState().showError(e);
                 });
+        mCompositeDisposable.add(disposable);
+    }
+
+    private void onEntriesLoaded(List<ListEntry> entries) {
+        getViewState().setEntries(entries);
+    }
+
+    private void onError(Throwable throwable) {
+        getViewState().showError(throwable);
     }
 }

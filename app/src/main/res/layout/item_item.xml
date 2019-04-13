@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_padding_size_medium"
         android:layout_marginStart="@dimen/margin_padding_size_medium"
-        android:textAppearance="?attr/textAppearanceCaption"
+        android:textAppearance="?attr/textAppearanceBody2"
         app:layout_constraintBottom_toTopOf="@+id/text_new_price"
         app:layout_constraintStart_toEndOf="@+id/image"
         tools:text="48р"/>

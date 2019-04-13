@@ -2,6 +2,7 @@ package ru.gcsales.app.data.model;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.ServerTimestamp;
 
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +19,7 @@ public class ListEntry extends Item {
 
     private Date mTimestamp;
     private int mCount;
+    private boolean mShowShop;
 
     public ListEntry() {
     }
@@ -58,6 +60,16 @@ public class ListEntry extends Item {
 
     public void setCount(int count) {
         mCount = count;
+    }
+
+
+    @Exclude
+    public boolean isShowShop() {
+        return mShowShop;
+    }
+
+    public void setShowShop(boolean showShop) {
+        mShowShop = showShop;
     }
 
     @Override

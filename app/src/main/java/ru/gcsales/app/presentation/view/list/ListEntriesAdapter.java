@@ -1,6 +1,7 @@
 package ru.gcsales.app.presentation.view.list;
 
 import android.content.res.Resources;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,8 @@ public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.
 
     public static class ListEntryViewHolder extends RecyclerView.ViewHolder {
 
+        private final TextView mShopTextView;
+        private final View mTopDivider;
         private final ImageView mImageView;
         private final TextView mNameTextView;
         private final TextView mOldPriceTextView;
@@ -73,6 +76,8 @@ public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.
 
         public ListEntryViewHolder(@NonNull View itemView) {
             super(itemView);
+            mShopTextView = itemView.findViewById(R.id.text_shop);
+            mTopDivider = itemView.findViewById(R.id.top_divider);
             mImageView = itemView.findViewById(R.id.image);
             mNameTextView = itemView.findViewById(R.id.text_name);
             mOldPriceTextView = itemView.findViewById(R.id.text_old_price);
@@ -86,11 +91,15 @@ public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.
                          @NonNull ItemClickListener<ListEntry> incrementListener,
                          @NonNull ItemClickListener<ListEntry> decrementListener) {
             final Resources resources = itemView.getResources();
+
+            mShopTextView.setText(entry.getShop());
+            mShopTextView.setVisibility(entry.isShowShop() ? View.VISIBLE : View.GONE);
+            mTopDivider.setVisibility(entry.isShowShop() ? View.VISIBLE : View.GONE);
             mNameTextView.setText(entry.getName());
             mOldPriceTextView.setText(resources.getString(R.string.price, entry.getOldPrice()));
+            mOldPriceTextView.setPaintFlags(mOldPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             mNewPriceTextView.setText(resources.getString(R.string.price, entry.getNewPrice()));
             mCountTextView.setText(resources.getString(R.string.count, entry.getCount()));
-
 
             Glide.with(mImageView.getContext())
                     .load(entry.getImageUrl())

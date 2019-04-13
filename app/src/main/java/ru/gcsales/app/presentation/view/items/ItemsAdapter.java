@@ -83,8 +83,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
             mOldPriceTextView.setPaintFlags(mOldPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             mNewPriceTextView.setText(resources.getString(R.string.price, item.getNewPrice()));
 
-            // TODO: other bindings
-
             Glide.with(mImageView.getContext())
                     .load(item.getImageUrl())
                     .placeholder(R.drawable.item_placeholder)
