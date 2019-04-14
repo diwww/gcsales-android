@@ -18,6 +18,7 @@
     <dimen name="list_entry_logo_size">64dp</dimen>
     <dimen name="add_button_size">40dp</dimen>
     <dimen name="inc_dec_button_size">24dp</dimen>
+    <dimen name="map_button_size">24dp</dimen>
 
     <dimen name="divider_height">1dp</dimen>
     <dimen name="image_border_width">1dp</dimen>

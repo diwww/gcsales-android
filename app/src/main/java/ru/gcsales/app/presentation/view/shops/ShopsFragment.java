@@ -92,6 +92,11 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView {
         mAdapter.setShops(shops);
     }
 
+    @Override
+    public void startItemsFlow(@NonNull Shop shop) {
+        mRouter.startItemsFlow(getActivity(), shop);
+    }
+
     @ProvidePresenter
     ShopsPresenter providePresenter() {
         return mPresenterProvider.get();
@@ -100,7 +105,7 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView {
     private void initViews(View view) {
         mProgressBar = view.findViewById(R.id.progress_bar);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mAdapter = new ShopsAdapter(item -> mRouter.startItemsFlow(getActivity(), item));
+        mAdapter = new ShopsAdapter(mPresenter::openItems);
         mRecyclerView.setAdapter(mAdapter);
     }
 }

@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import ru.gcsales.app.App;
 import ru.gcsales.app.R;
 import ru.gcsales.app.data.model.ListEntry;
+import ru.gcsales.app.presentation.Router;
 import ru.gcsales.app.presentation.presenter.ListPresenter;
 
 /**
@@ -39,6 +39,8 @@ public class ListFragment extends MvpAppCompatFragment implements ListView {
 
     public static final String TAG = "ListFragment";
 
+    @Inject
+    Router mRouter;
     @Inject
     Provider<ListPresenter> mListPresenterProvider;
 
@@ -101,6 +103,11 @@ public class ListFragment extends MvpAppCompatFragment implements ListView {
         mAdapter.setEntries(entries);
     }
 
+    @Override
+    public void startMapFlow(@NonNull ListEntry entry) {
+        mRouter.startMapFlow(getActivity(), entry.getShop());
+    }
+
     @ProvidePresenter
     ListPresenter providePresenter() {
         return mListPresenterProvider.get();
@@ -109,7 +116,7 @@ public class ListFragment extends MvpAppCompatFragment implements ListView {
     private void initViews(View view) {
         mProgressBar = view.findViewById(R.id.progress_bar);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mAdapter = new ListEntriesAdapter(mPresenter::incrementCount, mPresenter::decrementCount);
+        mAdapter = new ListEntriesAdapter(mPresenter::incrementCount, mPresenter::decrementCount, mPresenter::openMap);
         mRecyclerView.setAdapter(mAdapter);
     }
 }

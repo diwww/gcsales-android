@@ -23,4 +23,11 @@ public interface ShopsView extends MvpView, ProgressView, ErrorView {
      * @param shops list of shops
      */
     void setShops(@NonNull List<Shop> shops);
+
+    /**
+     * Start items flow.
+     *
+     * @param shop shop
+     */
+    void startItemsFlow(@NonNull Shop shop);
 }

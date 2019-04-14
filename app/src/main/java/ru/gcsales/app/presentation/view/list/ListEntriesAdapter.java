@@ -31,11 +31,14 @@ public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.
     private final List<ListEntry> mEntries;
     private final ItemClickListener<ListEntry> mIncrementListener;
     private final ItemClickListener<ListEntry> mDecrementListener;
+    private final ItemClickListener<ListEntry> mOpenMapListener;
 
     public ListEntriesAdapter(@NonNull ItemClickListener<ListEntry> incrementListener,
-                              @NonNull ItemClickListener<ListEntry> decrementListener) {
+                              @NonNull ItemClickListener<ListEntry> decrementListener,
+                              @NonNull ItemClickListener<ListEntry> openMapListener) {
         mIncrementListener = incrementListener;
         mDecrementListener = decrementListener;
+        mOpenMapListener = openMapListener;
         mEntries = new ArrayList<>();
     }
 
@@ -48,7 +51,7 @@ public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ListEntryViewHolder holder, int position) {
-        holder.bind(mEntries.get(position), mIncrementListener, mDecrementListener);
+        holder.bind(mEntries.get(position), mIncrementListener, mDecrementListener, mOpenMapListener);
     }
 
     @Override
@@ -65,6 +68,7 @@ public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.
     public static class ListEntryViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView mShopTextView;
+        private final ImageButton mOpenMapButton;
         private final View mTopDivider;
         private final ImageView mImageView;
         private final TextView mNameTextView;
@@ -77,6 +81,7 @@ public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.
         public ListEntryViewHolder(@NonNull View itemView) {
             super(itemView);
             mShopTextView = itemView.findViewById(R.id.text_shop);
+            mOpenMapButton = itemView.findViewById(R.id.button_open_map);
             mTopDivider = itemView.findViewById(R.id.top_divider);
             mImageView = itemView.findViewById(R.id.image);
             mNameTextView = itemView.findViewById(R.id.text_name);
@@ -89,11 +94,13 @@ public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.
 
         public void bind(@NonNull ListEntry entry,
                          @NonNull ItemClickListener<ListEntry> incrementListener,
-                         @NonNull ItemClickListener<ListEntry> decrementListener) {
+                         @NonNull ItemClickListener<ListEntry> decrementListener,
+                         @NonNull ItemClickListener<ListEntry> openMapListener) {
             final Resources resources = itemView.getResources();
 
             mShopTextView.setText(entry.getShop());
             mShopTextView.setVisibility(entry.isShowShop() ? View.VISIBLE : View.GONE);
+            mOpenMapButton.setVisibility(entry.isShowShop() ? View.VISIBLE : View.GONE);
             mTopDivider.setVisibility(entry.isShowShop() ? View.VISIBLE : View.GONE);
             mNameTextView.setText(entry.getName());
             mOldPriceTextView.setText(resources.getString(R.string.price, entry.getOldPrice()));
@@ -105,6 +112,7 @@ public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.
                     .load(entry.getImageUrl())
                     .placeholder(R.drawable.item_placeholder)
                     .into(mImageView);
+            mOpenMapButton.setOnClickListener(v -> openMapListener.onItemClicked(entry));
             mIncrementButton.setOnClickListener(v -> incrementListener.onItemClicked(entry));
             mDecrementButton.setOnClickListener(v -> decrementListener.onItemClicked(entry));
         }

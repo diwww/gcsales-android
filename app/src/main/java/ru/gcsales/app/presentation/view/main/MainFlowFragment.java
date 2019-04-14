@@ -23,11 +23,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import ru.gcsales.app.App;
-import ru.gcsales.app.data.manager.AuthManager;
 import ru.gcsales.app.R;
+import ru.gcsales.app.data.manager.AuthManager;
 import ru.gcsales.app.presentation.Router;
 import ru.gcsales.app.presentation.view.list.ListFragment;
-import ru.gcsales.app.presentation.view.map.MapFragment;
 import ru.gcsales.app.presentation.view.shops.ShopsFragment;
 
 /**
@@ -45,7 +44,6 @@ public class MainFlowFragment extends Fragment implements BottomNavigationView.O
 
     private ShopsFragment mShopsFragment;
     private ListFragment mListFragment;
-    private MapFragment mMapFragment;
 
     /**
      * Creates a new instance of this fragment.
@@ -87,9 +85,6 @@ public class MainFlowFragment extends Fragment implements BottomNavigationView.O
             case R.id.navigation_list:
                 fragment = mListFragment;
                 break;
-            case R.id.navigation_map:
-                fragment = mMapFragment;
-                break;
             default:
                 fragment = mShopsFragment;
         }
@@ -107,7 +102,6 @@ public class MainFlowFragment extends Fragment implements BottomNavigationView.O
     private void initFragments() {
         mShopsFragment = ShopsFragment.newInstance();
         mListFragment = ListFragment.newInstance();
-        mMapFragment = MapFragment.newInstance();
     }
 
     /**

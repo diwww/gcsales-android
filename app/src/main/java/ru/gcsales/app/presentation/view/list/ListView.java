@@ -23,4 +23,11 @@ public interface ListView extends MvpView, ProgressView, ErrorView {
      * @param entries list of entries
      */
     void setEntries(@NonNull List<ListEntry> entries);
+
+    /**
+     * Starts map flow.
+     *
+     * @param entry shopping list entry
+     */
+    void startMapFlow(@NonNull ListEntry entry);
 }

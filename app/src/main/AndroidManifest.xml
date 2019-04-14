@@ -3,6 +3,8 @@
           xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -12,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAEI-D5lh8sksZhAyW6rEAsH5k2nDzp_wM"/>
+
         <activity android:name=".presentation.view.AppActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -20,5 +25,6 @@
             </intent-filter>
         </activity>
     </application>
+
 
 </manifest>

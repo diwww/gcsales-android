@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import ru.gcsales.app.data.model.ListEntry;
 import ru.gcsales.app.data.repository.ListRepository;
@@ -54,24 +53,28 @@ public class ListPresenter extends MvpPresenter<ListView> {
         mListenerDisposable.dispose();
     }
 
-    public void incrementCount(ListEntry entry) {
+    public void incrementCount(@NonNull ListEntry entry) {
         Disposable disposable = mRepository.incrementCount(entry)
-                .subscribe(() -> {
-                }, e -> getViewState().showError(e));
+                .subscribe(this::onComplete, this::onError);
         mCompositeDisposable.add(disposable);
     }
 
-    public void decrementCount(ListEntry entry) {
+    public void decrementCount(@NonNull ListEntry entry) {
         Disposable disposable = mRepository.decrementCount(entry)
-                .subscribe(() -> {
-                }, e -> {
-                    getViewState().showError(e);
-                });
+                .subscribe(this::onComplete, this::onError);
         mCompositeDisposable.add(disposable);
+    }
+
+    public void openMap(@NonNull ListEntry entry) {
+        getViewState().startMapFlow(entry);
     }
 
     private void onEntriesLoaded(List<ListEntry> entries) {
         getViewState().setEntries(entries);
+    }
+
+    private void onComplete() {
+        // TODO: maybe logging
     }
 
     private void onError(Throwable throwable) {

@@ -48,6 +48,10 @@ public class ShopsPresenter extends MvpPresenter<ShopsView> {
         mCompositeDisposable.dispose();
     }
 
+    public void openItems(@NonNull Shop shop) {
+        getViewState().startItemsFlow(shop);
+    }
+
     private void onShopsLoaded(List<Shop> shops) {
         getViewState().setShops(shops);
     }
