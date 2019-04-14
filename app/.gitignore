@@ -1,2 +1,4 @@
 /build
+/src/debug/res/values
+/src/release/res/values
 google-services.json
