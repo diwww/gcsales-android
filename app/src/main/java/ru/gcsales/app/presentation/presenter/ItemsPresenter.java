@@ -77,7 +77,7 @@ public class ItemsPresenter extends MvpPresenter<ItemsView> {
     }
 
     private void onItemAdded() {
-        // TODO:
+        getViewState().showSnackbar();
     }
 
     private void onError(Throwable throwable) {

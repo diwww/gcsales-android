@@ -24,4 +24,10 @@ public interface ItemsView extends MvpView, ProgressView, ErrorView {
      * @param items list of items
      */
     void setItems(@NonNull List<Item> items);
+
+    /**
+     * Shows a snackbar which tells that
+     * the item is added to the shopping list.
+     */
+    void showSnackbar();
 }

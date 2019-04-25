@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -100,6 +101,11 @@ public class ItemsFlowFragment extends MvpAppCompatFragment implements ItemsView
     @Override
     public void setItems(@NotNull @NonNull List<Item> items) {
         mAdapter.setItems(items);
+    }
+
+    @Override
+    public void showSnackbar() {
+        Snackbar.make(getView(), R.string.item_added, Snackbar.LENGTH_SHORT).show();
     }
 
     @ProvidePresenter
