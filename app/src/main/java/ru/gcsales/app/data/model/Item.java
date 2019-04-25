@@ -18,8 +18,8 @@ public class Item {
     private String name;
     private String shop;
     private String imageUrl;
-    private double oldPrice;
-    private double newPrice;
+    private Double oldPrice;
+    private Double newPrice;
 
     public Item() {
     }
@@ -57,11 +57,11 @@ public class Item {
         this.imageUrl = imageUrl;
     }
 
-    public double getOldPrice() {
+    public Double getOldPrice() {
         return oldPrice;
     }
 
-    public void setOldPrice(double oldPrice) {
+    public void setOldPrice(Double oldPrice) {
         this.oldPrice = oldPrice;
     }
 

@@ -1,15 +1,18 @@
 <resources>
     <string name="app_name">gcSales</string>
+    <string name="undefined_text">undefined</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_in_cancelled">Sign in cancelled</string>
+    <string name="sign_out">Sign out</string>
+    <string name="sign_out_dialog_message">Do you really want to sign out?</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="unknown_error">An unknown error occurred</string>
-    <string name="sign_out">Sign out</string>
     <string name="shops">Shops</string>
     <string name="list">List</string>
     <string name="map">Map</string>
     <string name="loading_error">Error loading data</string>
-    <string name="undefined_text">undefined</string>
 
     <string name="price">%.2f \u20BD</string>
     <string name="count">%d</string>

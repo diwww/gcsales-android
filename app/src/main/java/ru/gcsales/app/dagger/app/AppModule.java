@@ -62,5 +62,4 @@ public class AppModule {
     public FirebaseAuth provideFirebaseAuth() {
         return mAuth;
     }
-
 }

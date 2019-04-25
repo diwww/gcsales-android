@@ -3,6 +3,8 @@ package ru.gcsales.app.presentation.view.main;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -63,14 +66,13 @@ public class MainFlowFragment extends Fragment implements BottomNavigationView.O
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
-        initViews(view);
-        return view;
+        return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        initViews(view);
         initFragments();
         displayFragment(mShopsFragment);
     }
@@ -92,6 +94,21 @@ public class MainFlowFragment extends Fragment implements BottomNavigationView.O
         return true;
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.main_toolbar_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_sign_out) {
+            showSignOutDialog();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void initViews(@NonNull View view) {
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -102,6 +119,20 @@ public class MainFlowFragment extends Fragment implements BottomNavigationView.O
     private void initFragments() {
         mShopsFragment = ShopsFragment.newInstance();
         mListFragment = ListFragment.newInstance();
+    }
+
+    private void showSignOutDialog() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.sign_out)
+                .setMessage(R.string.sign_out_dialog_message)
+                .setPositiveButton(R.string.yes, (dialog, which) -> {
+                    mAuthManager.signOut();
+                    mRouter.startSignInFlow(getActivity());
+                })
+                .setNegativeButton(R.string.no, (dialog, which) -> {
+                })
+                .create()
+                .show();
     }
 
     /**
