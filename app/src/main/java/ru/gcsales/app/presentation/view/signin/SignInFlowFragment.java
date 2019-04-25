@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Arrays;
 import java.util.List;
@@ -88,15 +88,15 @@ public class SignInFlowFragment extends Fragment {
             mRootView.setVisibility(View.VISIBLE);
 
             if (response == null) {
-                showToast(R.string.sign_in_cancelled);
+                showSnackbar(R.string.sign_in_cancelled);
                 return;
             }
             if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
-                showToast(R.string.no_internet_connection);
+                showSnackbar(R.string.no_internet_connection);
                 return;
             }
 
-            showToast(R.string.unknown_error);
+            showSnackbar(R.string.unknown_error);
         }
     }
 
@@ -116,7 +116,7 @@ public class SignInFlowFragment extends Fragment {
         mRootView.setVisibility(View.INVISIBLE);
     }
 
-    private void showToast(@StringRes int textId) {
-        Toast.makeText(getActivity(), textId, Toast.LENGTH_SHORT).show();
+    private void showSnackbar(@StringRes int textId) {
+        Snackbar.make(getView(), textId, Snackbar.LENGTH_SHORT).show();
     }
 }

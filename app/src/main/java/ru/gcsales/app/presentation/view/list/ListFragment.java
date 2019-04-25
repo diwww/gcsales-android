@@ -2,26 +2,24 @@ package ru.gcsales.app.presentation.view.list;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import ru.gcsales.app.App;
 import ru.gcsales.app.R;
@@ -94,7 +92,7 @@ public class ListFragment extends MvpAppCompatFragment implements ListView {
 
     @Override
     public void showError(Throwable throwable) {
-        Toast.makeText(getActivity(), R.string.loading_error, Toast.LENGTH_SHORT).show();
+        Snackbar.make(getView(), R.string.loading_error, Snackbar.LENGTH_SHORT).show();
         Log.e(TAG, throwable.toString());
     }
 

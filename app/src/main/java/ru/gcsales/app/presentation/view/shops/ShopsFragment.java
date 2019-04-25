@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,7 +28,6 @@ import ru.gcsales.app.R;
 import ru.gcsales.app.data.model.Shop;
 import ru.gcsales.app.presentation.Router;
 import ru.gcsales.app.presentation.presenter.ShopsPresenter;
-import ru.gcsales.app.presentation.view.ItemClickListener;
 
 /**
  * Fragment which contains available shops.
@@ -83,7 +82,7 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView {
 
     @Override
     public void showError(Throwable throwable) {
-        Toast.makeText(getActivity(), R.string.loading_error, Toast.LENGTH_SHORT).show();
+        Snackbar.make(getView(), R.string.loading_error, Snackbar.LENGTH_SHORT).show();
         Log.e(TAG, throwable.toString());
     }
 
