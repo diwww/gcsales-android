@@ -4,10 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import ru.gcsales.app.R;
-import ru.gcsales.app.data.model.ListEntry;
-import ru.gcsales.app.data.model.Shop;
+import ru.gcsales.app.data.model.internal.Shop;
 import ru.gcsales.app.presentation.view.items.ItemsFlowFragment;
 import ru.gcsales.app.presentation.view.main.MainFlowFragment;
 import ru.gcsales.app.presentation.view.map.MapFlowFragment;
@@ -51,7 +49,7 @@ public class Router {
         Fragment fragment = fm.findFragmentById(R.id.app_container);
 
         fm.beginTransaction()
-                .add(R.id.app_container, MapFlowFragment.newInstance())
+                .add(R.id.app_container, MapFlowFragment.newInstance(shop))
                 .hide(fragment)
                 .addToBackStack(null)
                 .commit();

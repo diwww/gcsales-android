@@ -11,7 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import ru.gcsales.app.data.model.Shop;
+import ru.gcsales.app.data.model.internal.Shop;
 import ru.gcsales.app.data.repository.ShopsRepository;
 import ru.gcsales.app.presentation.view.shops.ShopsView;
 

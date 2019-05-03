@@ -1,12 +1,11 @@
 package ru.gcsales.app.presentation.view.items;
 
 import com.arellomobile.mvp.MvpView;
-import com.arellomobile.mvp.presenter.InjectPresenter;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import ru.gcsales.app.data.model.Item;
+import ru.gcsales.app.data.model.internal.Item;
 import ru.gcsales.app.presentation.view.base.ErrorView;
 import ru.gcsales.app.presentation.view.base.ProgressView;
 

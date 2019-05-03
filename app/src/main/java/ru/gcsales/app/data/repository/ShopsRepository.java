@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Maybe;
-import ru.gcsales.app.data.model.Shop;
+import ru.gcsales.app.data.model.internal.Shop;
 
 /**
  * Repository implementation for retrieving shops.

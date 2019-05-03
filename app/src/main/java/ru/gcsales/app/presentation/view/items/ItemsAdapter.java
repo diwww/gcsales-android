@@ -17,7 +17,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import ru.gcsales.app.R;
-import ru.gcsales.app.data.model.Item;
+import ru.gcsales.app.data.model.internal.Item;
 import ru.gcsales.app.presentation.view.ItemClickListener;
 
 /**

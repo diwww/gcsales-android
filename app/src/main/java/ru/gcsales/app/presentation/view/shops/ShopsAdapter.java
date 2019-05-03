@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.gcsales.app.R;
-import ru.gcsales.app.data.model.Shop;
+import ru.gcsales.app.data.model.internal.Shop;
 import ru.gcsales.app.presentation.view.ItemClickListener;
 
 /**

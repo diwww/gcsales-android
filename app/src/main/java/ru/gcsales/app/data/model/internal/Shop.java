@@ -1,4 +1,4 @@
-package ru.gcsales.app.data.model;
+package ru.gcsales.app.data.model.internal;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;

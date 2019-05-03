@@ -22,9 +22,8 @@ import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
-import ru.gcsales.app.data.model.Item;
-import ru.gcsales.app.data.model.ListEntry;
-import ru.gcsales.app.data.model.Shop;
+import ru.gcsales.app.data.model.internal.Item;
+import ru.gcsales.app.data.model.internal.ListEntry;
 
 /**
  * Repository for managing user's shopping list.

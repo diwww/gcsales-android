@@ -23,7 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import ru.gcsales.app.App;
 import ru.gcsales.app.R;
-import ru.gcsales.app.data.model.ListEntry;
+import ru.gcsales.app.data.model.internal.ListEntry;
 import ru.gcsales.app.presentation.Router;
 import ru.gcsales.app.presentation.presenter.ListPresenter;
 

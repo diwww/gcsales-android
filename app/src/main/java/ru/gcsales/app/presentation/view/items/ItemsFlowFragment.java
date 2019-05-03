@@ -27,8 +27,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 import ru.gcsales.app.App;
 import ru.gcsales.app.R;
-import ru.gcsales.app.data.model.Item;
-import ru.gcsales.app.data.model.Shop;
+import ru.gcsales.app.data.model.internal.Item;
+import ru.gcsales.app.data.model.internal.Shop;
 import ru.gcsales.app.presentation.Router;
 import ru.gcsales.app.presentation.presenter.ItemsPresenter;
 

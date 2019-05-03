@@ -9,7 +9,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import io.reactivex.Maybe;
-import ru.gcsales.app.data.model.Item;
+import ru.gcsales.app.data.model.internal.Item;
 
 /**
  * Repository implementation for getting shop's items.

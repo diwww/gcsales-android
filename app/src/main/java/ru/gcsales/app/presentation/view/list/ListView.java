@@ -5,7 +5,7 @@ import com.arellomobile.mvp.MvpView;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import ru.gcsales.app.data.model.ListEntry;
+import ru.gcsales.app.data.model.internal.ListEntry;
 import ru.gcsales.app.presentation.view.base.ErrorView;
 import ru.gcsales.app.presentation.view.base.ProgressView;
 
