@@ -22,16 +22,16 @@ import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
+import ru.gcsales.app.data.model.internal.CartEntry;
 import ru.gcsales.app.data.model.internal.Item;
-import ru.gcsales.app.data.model.internal.ListEntry;
 
 /**
- * Repository for managing user's shopping list.
+ * Repository for managing user's shopping cart.
  *
  * @author Maxim Surovtsev
  * @since 09/04/2019
  */
-public class ListRepository extends RxFirestoreRepository {
+public class CartRepository extends RxFirestoreRepository {
 
     private static final String COLLECTION_PATH = "users/%s/items";
     private static final String DOCUMENT_PATH = "users/%s/items/%s";
@@ -41,17 +41,17 @@ public class ListRepository extends RxFirestoreRepository {
     private final FirebaseAuth mAuth;
     private ListenerRegistration mListenerRegistration;
 
-    public ListRepository(@NonNull FirebaseFirestore firestore, @NonNull FirebaseAuth auth) {
+    public CartRepository(@NonNull FirebaseFirestore firestore, @NonNull FirebaseAuth auth) {
         super(firestore);
         mAuth = auth;
     }
 
     /**
-     * Gets shopping list entries.
+     * Gets shopping cart entries.
      *
      * @return {@link Maybe} with the result
      */
-    public Maybe<List<ListEntry>> getEntries() {
+    public Maybe<List<CartEntry>> getEntries() {
         String uid = mAuth.getCurrentUser().getUid();
 
         return getCollection(String.format(COLLECTION_PATH, uid))
@@ -59,8 +59,8 @@ public class ListRepository extends RxFirestoreRepository {
     }
 
     /**
-     * Adds an item to the shopping list.
-     * If item is already present, then {@link ListRepository#incrementCount(ListEntry)} is called.
+     * Adds an item to the shopping cart.
+     * If item is already present, then {@link CartRepository#incrementCount(CartEntry)} is called.
      *
      * @param item item to add
      * @return {@link Completable} with the result
@@ -71,32 +71,32 @@ public class ListRepository extends RxFirestoreRepository {
 
         return getDocument(String.format(DOCUMENT_PATH, uid, item.getId()))
                 .map(this::convertDocumentSnapshot)
-                .defaultIfEmpty(ListEntry.fromItem(item))
+                .defaultIfEmpty(CartEntry.fromItem(item))
                 .flatMap(entry -> incrementCount(entry).toMaybe())
                 .ignoreElement();
     }
 
     /**
-     * Increments count of shopping list entry.
+     * Increments count of shopping cart entry.
      *
-     * @param entry shopping list entry
+     * @param entry shopping cart entry
      * @return {@link Completable} with the result
      */
     @NonNull
-    public Completable incrementCount(@NonNull ListEntry entry) {
+    public Completable incrementCount(@NonNull CartEntry entry) {
         String uid = mAuth.getCurrentUser().getUid();
         return setDocument(String.format(DOCUMENT_PATH, uid, entry.getId()), entry.incrementCount(), SetOptions.merge());
     }
 
     /**
-     * Decrements count of shopping list entry or
+     * Decrements count of shopping cart entry or
      * deletes this entry if its count is less or equal to {@code 1}.
      *
-     * @param entry shopping list entry
+     * @param entry shopping cart entry
      * @return {@link Completable} with the result
      */
     @NonNull
-    public Completable decrementCount(@NonNull ListEntry entry) {
+    public Completable decrementCount(@NonNull CartEntry entry) {
         String uid = mAuth.getCurrentUser().getUid();
 
         if (entry.getCount() <= 1) {
@@ -107,9 +107,9 @@ public class ListRepository extends RxFirestoreRepository {
     }
 
     /**
-     * Returns {@link Observable} which emits shopping list entries every time update occurs.
+     * Returns {@link Observable} which emits shopping cart entries every time update occurs.
      */
-    public Observable<List<ListEntry>> getUpdateObservable() {
+    public Observable<List<CartEntry>> getUpdateObservable() {
         String uid = mAuth.getCurrentUser().getUid();
 
         return Observable.create(emitter -> {
@@ -125,7 +125,7 @@ public class ListRepository extends RxFirestoreRepository {
                             }
 
                             if (querySnapshot != null) {
-                                List<ListEntry> entries = processEntries(convertQuerySnapshot(querySnapshot));
+                                List<CartEntry> entries = processEntries(convertQuerySnapshot(querySnapshot));
                                 emitter.onNext(entries);
                             }
                         }
@@ -147,8 +147,8 @@ public class ListRepository extends RxFirestoreRepository {
     }
 
     @Nullable
-    private ListEntry convertDocumentSnapshot(@NonNull DocumentSnapshot documentSnapshot) {
-        ListEntry entry = documentSnapshot.toObject(ListEntry.class);
+    private CartEntry convertDocumentSnapshot(@NonNull DocumentSnapshot documentSnapshot) {
+        CartEntry entry = documentSnapshot.toObject(CartEntry.class);
         if (entry != null) {
             entry.setId(documentSnapshot.getId());
         }
@@ -156,25 +156,25 @@ public class ListRepository extends RxFirestoreRepository {
     }
 
     @NonNull
-    private List<ListEntry> convertQuerySnapshot(@NonNull QuerySnapshot querySnapshot) {
-        List<ListEntry> entries = new ArrayList<>(querySnapshot.size());
+    private List<CartEntry> convertQuerySnapshot(@NonNull QuerySnapshot querySnapshot) {
+        List<CartEntry> entries = new ArrayList<>(querySnapshot.size());
         for (QueryDocumentSnapshot snapshot : querySnapshot) {
             entries.add(convertDocumentSnapshot(snapshot));
         }
         return entries;
     }
 
-    private List<ListEntry> processEntries(@Nonnull List<ListEntry> entries) {
-        Iterator<ListEntry> iterator = entries.iterator();
+    private List<CartEntry> processEntries(@Nonnull List<CartEntry> entries) {
+        Iterator<CartEntry> iterator = entries.iterator();
         String currentShop = null;
 
         if (iterator.hasNext()) {
-            ListEntry entry = iterator.next();
+            CartEntry entry = iterator.next();
             currentShop = entry.getShop();
             entry.setShowShop(true);
         }
         while (iterator.hasNext()) {
-            ListEntry entry = iterator.next();
+            CartEntry entry = iterator.next();
             String shop = entry.getShop();
             if (!shop.equals(currentShop)) {
                 currentShop = shop;

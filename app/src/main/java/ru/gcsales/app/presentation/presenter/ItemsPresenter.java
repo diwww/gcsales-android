@@ -11,8 +11,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.gcsales.app.data.model.internal.Item;
+import ru.gcsales.app.data.repository.CartRepository;
 import ru.gcsales.app.data.repository.ItemsRepository;
-import ru.gcsales.app.data.repository.ListRepository;
 import ru.gcsales.app.presentation.view.items.ItemsView;
 
 /**
@@ -26,13 +26,13 @@ public class ItemsPresenter extends MvpPresenter<ItemsView> {
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private final ItemsRepository mItemsRepository;
-    private final ListRepository mListRepository;
+    private final CartRepository mCartRepository;
 
     private String mShopId;
 
-    public ItemsPresenter(@NonNull ItemsRepository itemsRepository, @NonNull ListRepository listRepository) {
+    public ItemsPresenter(@NonNull ItemsRepository itemsRepository, @NonNull CartRepository cartRepository) {
         mItemsRepository = itemsRepository;
-        mListRepository = listRepository;
+        mCartRepository = cartRepository;
     }
 
     @Override
@@ -54,12 +54,12 @@ public class ItemsPresenter extends MvpPresenter<ItemsView> {
     }
 
     /**
-     * Add an item to the shopping list.
+     * Add an item to the shopping cart.
      *
      * @param item item to add
      */
     public void addToList(Item item) {
-        Disposable disposable = mListRepository.addItem(item)
+        Disposable disposable = mCartRepository.addItem(item)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(__ -> getViewState().showProgress(true))

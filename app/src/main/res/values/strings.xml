@@ -11,9 +11,10 @@
     <string name="unknown_error">An unknown error occurred.</string>
     <string name="shops">Shops</string>
     <string name="list">List</string>
+    <string name="cart">Cart</string>
     <string name="map">Map</string>
     <string name="loading_error">Error loading data.</string>
-    <string name="item_added">Item was added to the shopping list.</string>
+    <string name="item_added">Item was added to the shopping cart.</string>
     <string name="location_permission_message">You should grant location permissions.</string>
     <string name="loading_nearest_shops">Loading nearest shops.</string>
 
@@ -22,7 +23,7 @@
 
 
     <!--TalkBack-->
-    <string name="talkback_add_button">Add to list</string>
+    <string name="talkback_add_button">Add to cart</string>
     <string name="talkback_inc_button">Increase count</string>
     <string name="talkback_dec_button">Decrease count</string>
     <string name="talkback_open_map">Open map</string>

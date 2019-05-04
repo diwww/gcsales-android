@@ -11,25 +11,25 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import ru.gcsales.app.data.model.internal.ListEntry;
-import ru.gcsales.app.data.repository.ListRepository;
-import ru.gcsales.app.presentation.view.list.ListView;
+import ru.gcsales.app.data.model.internal.CartEntry;
+import ru.gcsales.app.data.repository.CartRepository;
+import ru.gcsales.app.presentation.view.cart.CartView;
 
 /**
- * MVP presenter for shopping list screen.
+ * MVP presenter for shopping cart screen.
  *
  * @author Maxim Surovtsev
  * @since 11/04/2019
  */
 @InjectViewState
-public class ListPresenter extends MvpPresenter<ListView> {
+public class CartPresenter extends MvpPresenter<CartView> {
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
-    private final ListRepository mRepository;
+    private final CartRepository mRepository;
     private Disposable mListenerDisposable;
 
-    public ListPresenter(@NonNull ListRepository repository) {
+    public CartPresenter(@NonNull CartRepository repository) {
         mRepository = repository;
     }
 
@@ -53,23 +53,23 @@ public class ListPresenter extends MvpPresenter<ListView> {
         mListenerDisposable.dispose();
     }
 
-    public void incrementCount(@NonNull ListEntry entry) {
+    public void incrementCount(@NonNull CartEntry entry) {
         Disposable disposable = mRepository.incrementCount(entry)
                 .subscribe(this::onComplete, this::onError);
         mCompositeDisposable.add(disposable);
     }
 
-    public void decrementCount(@NonNull ListEntry entry) {
+    public void decrementCount(@NonNull CartEntry entry) {
         Disposable disposable = mRepository.decrementCount(entry)
                 .subscribe(this::onComplete, this::onError);
         mCompositeDisposable.add(disposable);
     }
 
-    public void openMap(@NonNull ListEntry entry) {
+    public void openMap(@NonNull CartEntry entry) {
         getViewState().startMapFlow(entry);
     }
 
-    private void onEntriesLoaded(List<ListEntry> entries) {
+    private void onEntriesLoaded(List<CartEntry> entries) {
         getViewState().setEntries(entries);
     }
 

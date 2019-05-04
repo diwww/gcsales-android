@@ -1,33 +1,33 @@
-package ru.gcsales.app.presentation.view.list;
+package ru.gcsales.app.presentation.view.cart;
 
 import com.arellomobile.mvp.MvpView;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import ru.gcsales.app.data.model.internal.ListEntry;
+import ru.gcsales.app.data.model.internal.CartEntry;
 import ru.gcsales.app.presentation.view.base.ErrorView;
 import ru.gcsales.app.presentation.view.base.ProgressView;
 
 /**
- * MVP view for shopping list screen.
+ * MVP view for shopping cart screen.
  *
  * @author Maxim Surovtsev
  * @since 11/04/2019
  */
-public interface ListView extends MvpView, ProgressView, ErrorView {
+public interface CartView extends MvpView, ProgressView, ErrorView {
 
     /**
      * Sets the list of entries.
      *
      * @param entries list of entries
      */
-    void setEntries(@NonNull List<ListEntry> entries);
+    void setEntries(@NonNull List<CartEntry> entries);
 
     /**
      * Starts map flow.
      *
-     * @param entry shopping list entry
+     * @param entry shopping cart entry
      */
-    void startMapFlow(@NonNull ListEntry entry);
+    void startMapFlow(@NonNull CartEntry entry);
 }

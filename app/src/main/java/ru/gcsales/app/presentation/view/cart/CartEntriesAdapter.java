@@ -1,4 +1,4 @@
-package ru.gcsales.app.presentation.view.list;
+package ru.gcsales.app.presentation.view.cart;
 
 import android.content.res.Resources;
 import android.graphics.Paint;
@@ -17,25 +17,25 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import ru.gcsales.app.R;
-import ru.gcsales.app.data.model.internal.ListEntry;
+import ru.gcsales.app.data.model.internal.CartEntry;
 import ru.gcsales.app.presentation.view.ItemClickListener;
 
 /**
- * Recycler view adapter for displaying shopping list entries.
+ * Recycler view adapter for displaying shopping cart entries.
  *
  * @author Maxim Surovtsev
  * @since 11/04/2019
  */
-public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.ListEntryViewHolder> {
+public class CartEntriesAdapter extends RecyclerView.Adapter<CartEntriesAdapter.CartEntryViewHolder> {
 
-    private final List<ListEntry> mEntries;
-    private final ItemClickListener<ListEntry> mIncrementListener;
-    private final ItemClickListener<ListEntry> mDecrementListener;
-    private final ItemClickListener<ListEntry> mOpenMapListener;
+    private final List<CartEntry> mEntries;
+    private final ItemClickListener<CartEntry> mIncrementListener;
+    private final ItemClickListener<CartEntry> mDecrementListener;
+    private final ItemClickListener<CartEntry> mOpenMapListener;
 
-    public ListEntriesAdapter(@NonNull ItemClickListener<ListEntry> incrementListener,
-                              @NonNull ItemClickListener<ListEntry> decrementListener,
-                              @NonNull ItemClickListener<ListEntry> openMapListener) {
+    public CartEntriesAdapter(@NonNull ItemClickListener<CartEntry> incrementListener,
+                              @NonNull ItemClickListener<CartEntry> decrementListener,
+                              @NonNull ItemClickListener<CartEntry> openMapListener) {
         mIncrementListener = incrementListener;
         mDecrementListener = decrementListener;
         mOpenMapListener = openMapListener;
@@ -44,13 +44,13 @@ public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.
 
     @NonNull
     @Override
-    public ListEntryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CartEntryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_entry, parent, false);
-        return new ListEntryViewHolder(view);
+        return new CartEntryViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListEntryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CartEntryViewHolder holder, int position) {
         holder.bind(mEntries.get(position), mIncrementListener, mDecrementListener, mOpenMapListener);
     }
 
@@ -59,13 +59,13 @@ public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.
         return mEntries.size();
     }
 
-    public void setEntries(@NonNull List<ListEntry> entries) {
+    public void setEntries(@NonNull List<CartEntry> entries) {
         mEntries.clear();
         mEntries.addAll(entries);
         notifyDataSetChanged();
     }
 
-    public static class ListEntryViewHolder extends RecyclerView.ViewHolder {
+    public static class CartEntryViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView mShopTextView;
         private final ImageButton mOpenMapButton;
@@ -78,7 +78,7 @@ public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.
         private final ImageButton mIncrementButton;
         private final ImageButton mDecrementButton;
 
-        public ListEntryViewHolder(@NonNull View itemView) {
+        public CartEntryViewHolder(@NonNull View itemView) {
             super(itemView);
             mShopTextView = itemView.findViewById(R.id.text_shop);
             mOpenMapButton = itemView.findViewById(R.id.button_open_map);
@@ -92,10 +92,10 @@ public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.
             mDecrementButton = itemView.findViewById(R.id.button_decrement);
         }
 
-        public void bind(@NonNull ListEntry entry,
-                         @NonNull ItemClickListener<ListEntry> incrementListener,
-                         @NonNull ItemClickListener<ListEntry> decrementListener,
-                         @NonNull ItemClickListener<ListEntry> openMapListener) {
+        public void bind(@NonNull CartEntry entry,
+                         @NonNull ItemClickListener<CartEntry> incrementListener,
+                         @NonNull ItemClickListener<CartEntry> decrementListener,
+                         @NonNull ItemClickListener<CartEntry> openMapListener) {
             final Resources resources = itemView.getResources();
 
             mShopTextView.setText(entry.getShop());

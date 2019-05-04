@@ -1,4 +1,4 @@
-package ru.gcsales.app.presentation.view.list;
+package ru.gcsales.app.presentation.view.cart;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -23,39 +23,39 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import ru.gcsales.app.App;
 import ru.gcsales.app.R;
-import ru.gcsales.app.data.model.internal.ListEntry;
+import ru.gcsales.app.data.model.internal.CartEntry;
 import ru.gcsales.app.presentation.Router;
-import ru.gcsales.app.presentation.presenter.ListPresenter;
+import ru.gcsales.app.presentation.presenter.CartPresenter;
 
 /**
- * Fragment which contains shopping list.
+ * Fragment which contains shopping cart.
  *
  * @author Maxim Surovtsev
  * @since 01/04/2019
  */
-public class ListFragment extends MvpAppCompatFragment implements ListView {
+public class CartFragment extends MvpAppCompatFragment implements CartView {
 
-    public static final String TAG = "ListFragment";
+    public static final String TAG = "CartFragment";
 
     @Inject
     Router mRouter;
     @Inject
-    Provider<ListPresenter> mListPresenterProvider;
+    Provider<CartPresenter> mListPresenterProvider;
 
     @InjectPresenter
-    ListPresenter mPresenter;
+    CartPresenter mPresenter;
 
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
-    private ListEntriesAdapter mAdapter;
+    private CartEntriesAdapter mAdapter;
 
     /**
      * Creates a new instance of this fragment.
      *
      * @return new fragment instance
      */
-    public static ListFragment newInstance() {
-        return new ListFragment();
+    public static CartFragment newInstance() {
+        return new CartFragment();
     }
 
     @Override
@@ -67,7 +67,7 @@ public class ListFragment extends MvpAppCompatFragment implements ListView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_cart, container, false);
         initViews(view);
         return view;
     }
@@ -97,24 +97,24 @@ public class ListFragment extends MvpAppCompatFragment implements ListView {
     }
 
     @Override
-    public void setEntries(@NonNull List<ListEntry> entries) {
+    public void setEntries(@NonNull List<CartEntry> entries) {
         mAdapter.setEntries(entries);
     }
 
     @Override
-    public void startMapFlow(@NonNull ListEntry entry) {
+    public void startMapFlow(@NonNull CartEntry entry) {
         mRouter.startMapFlow(getActivity(), entry.getShop());
     }
 
     @ProvidePresenter
-    ListPresenter providePresenter() {
+    CartPresenter providePresenter() {
         return mListPresenterProvider.get();
     }
 
     private void initViews(View view) {
         mProgressBar = view.findViewById(R.id.progress_bar);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mAdapter = new ListEntriesAdapter(mPresenter::incrementCount, mPresenter::decrementCount, mPresenter::openMap);
+        mAdapter = new CartEntriesAdapter(mPresenter::incrementCount, mPresenter::decrementCount, mPresenter::openMap);
         mRecyclerView.setAdapter(mAdapter);
     }
 }

@@ -26,7 +26,7 @@ public interface ItemsView extends MvpView, ProgressView, ErrorView {
 
     /**
      * Shows a snackbar which tells that
-     * the item is added to the shopping list.
+     * the item is added to the cart.
      */
     void showSnackbar();
 }

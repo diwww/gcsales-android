@@ -47,8 +47,8 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="@dimen/list_entry_logo_size"
-        android:layout_height="@dimen/list_entry_logo_size"
+        android:layout_width="@dimen/cart_entry_logo_size"
+        android:layout_height="@dimen/cart_entry_logo_size"
         android:layout_marginBottom="@dimen/margin_padding_size_medium"
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:layout_marginTop="@dimen/margin_padding_size_medium"

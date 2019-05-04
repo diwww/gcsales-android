@@ -4,12 +4,12 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import ru.gcsales.app.dagger.items.ItemsModule;
-import ru.gcsales.app.dagger.list.ListModule;
+import ru.gcsales.app.dagger.list.CartModule;
 import ru.gcsales.app.dagger.map.MapModule;
 import ru.gcsales.app.dagger.shops.ShopsModule;
 import ru.gcsales.app.presentation.view.AppActivity;
 import ru.gcsales.app.presentation.view.items.ItemsFlowFragment;
-import ru.gcsales.app.presentation.view.list.ListFragment;
+import ru.gcsales.app.presentation.view.cart.CartFragment;
 import ru.gcsales.app.presentation.view.main.MainFlowFragment;
 import ru.gcsales.app.presentation.view.map.MapFlowFragment;
 import ru.gcsales.app.presentation.view.shops.ShopsFragment;
@@ -26,7 +26,7 @@ import ru.gcsales.app.presentation.view.signin.SignInFlowFragment;
         // region Feature modules
         ShopsModule.class,
         ItemsModule.class,
-        ListModule.class,
+        CartModule.class,
         MapModule.class
         // endregion
 })
@@ -43,7 +43,7 @@ public interface AppComponent {
 
     void inject(ItemsFlowFragment fragment);
 
-    void inject(ListFragment fragment);
+    void inject(CartFragment fragment);
 
     void inject(MapFlowFragment fragment);
 }

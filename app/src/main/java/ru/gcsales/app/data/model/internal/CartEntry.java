@@ -10,22 +10,22 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Date;
 
 /**
- * Shopping list entry model.
+ * Shopping cart entry model.
  *
  * @author Maxim Surovtsev
  * @since 10/04/2019
  */
-public class ListEntry extends Item {
+public class CartEntry extends Item {
 
     private Date mTimestamp;
     private int mCount;
     private boolean mShowShop;
 
-    public ListEntry() {
+    public CartEntry() {
     }
 
-    public static ListEntry fromItem(Item item) {
-        ListEntry entry = new ListEntry();
+    public static CartEntry fromItem(Item item) {
+        CartEntry entry = new CartEntry();
         entry.setId(item.getId());
         entry.setImageUrl(item.getImageUrl());
         entry.setName(item.getName());
@@ -35,12 +35,12 @@ public class ListEntry extends Item {
         return entry;
     }
 
-    public ListEntry incrementCount() {
+    public CartEntry incrementCount() {
         mCount++;
         return this;
     }
 
-    public ListEntry decrementCount() {
+    public CartEntry decrementCount() {
         mCount--;
         return this;
     }
@@ -77,15 +77,15 @@ public class ListEntry extends Item {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ListEntry)) {
+        if (!(o instanceof CartEntry)) {
             return false;
         }
         if (!super.equals(o)) {
             return false;
         }
-        ListEntry listEntry = (ListEntry) o;
-        return mCount == listEntry.mCount &&
-                Objects.equal(mTimestamp, listEntry.mTimestamp);
+        CartEntry cartEntry = (CartEntry) o;
+        return mCount == cartEntry.mCount &&
+                Objects.equal(mTimestamp, cartEntry.mTimestamp);
     }
 
     @Override
