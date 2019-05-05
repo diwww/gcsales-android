@@ -6,6 +6,7 @@ import com.arellomobile.mvp.MvpPresenter;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -28,7 +29,10 @@ public class ItemsPresenter extends MvpPresenter<ItemsView> {
     private final ItemsRepository mItemsRepository;
     private final CartRepository mCartRepository;
 
-    private String mShopId;
+    @Nullable
+    private String mShop;
+    @Nullable
+    private String mKeyword;
 
     public ItemsPresenter(@NonNull ItemsRepository itemsRepository, @NonNull CartRepository cartRepository) {
         mItemsRepository = itemsRepository;
@@ -37,8 +41,7 @@ public class ItemsPresenter extends MvpPresenter<ItemsView> {
 
     @Override
     protected void onFirstViewAttach() {
-
-        Disposable disposable = mItemsRepository.getItems(mShopId)
+        Disposable disposable = mItemsRepository.getItems(mShop, mKeyword)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(__ -> getViewState().showProgress(true))
@@ -58,7 +61,7 @@ public class ItemsPresenter extends MvpPresenter<ItemsView> {
      *
      * @param item item to add
      */
-    public void addToList(Item item) {
+    public void addToList(@NonNull Item item) {
         Disposable disposable = mCartRepository.addItem(item)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -68,8 +71,12 @@ public class ItemsPresenter extends MvpPresenter<ItemsView> {
         mCompositeDisposable.add(disposable);
     }
 
-    public void setShopId(String shopId) {
-        mShopId = shopId;
+    public void setShop(@Nullable String shop) {
+        mShop = shop;
+    }
+
+    public void setKeyword(@Nullable String keyword) {
+        mKeyword = keyword;
     }
 
     private void onItemsLoaded(List<Item> items) {

@@ -23,9 +23,11 @@ import ru.gcsales.app.presentation.view.ItemClickListener;
 public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.ListEntryViewHolder> {
 
     private final List<ListEntry> mEntries;
+    private final ItemClickListener<ListEntry> mClickListener;
     private final ItemClickListener<ListEntry> mLongClickListener;
 
-    public ListEntriesAdapter(@NonNull ItemClickListener<ListEntry> longClickListener) {
+    public ListEntriesAdapter(@NonNull ItemClickListener<ListEntry> clickListener, @NonNull ItemClickListener<ListEntry> longClickListener) {
+        mClickListener = clickListener;
         mLongClickListener = longClickListener;
         mEntries = new ArrayList<>();
     }
@@ -39,7 +41,7 @@ public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ListEntryViewHolder holder, int position) {
-        holder.bind(mEntries.get(position), mLongClickListener);
+        holder.bind(mEntries.get(position), mClickListener, mLongClickListener);
     }
 
     public void setEntries(@NonNull List<ListEntry> entries) {
@@ -63,11 +65,14 @@ public class ListEntriesAdapter extends RecyclerView.Adapter<ListEntriesAdapter.
             mNameTextView = itemView.findViewById(R.id.text_name);
         }
 
-        public void bind(@NonNull ListEntry entry, @NonNull ItemClickListener<ListEntry> listener) {
+        public void bind(@NonNull ListEntry entry,
+                         @NonNull ItemClickListener<ListEntry> clickListener,
+                         @NonNull ItemClickListener<ListEntry> longClickListener) {
             mNameTextView.setText(entry.getName());
+            itemView.setOnClickListener(v -> clickListener.onItemClicked(entry));
             itemView.setLongClickable(true);
             itemView.setOnLongClickListener(v -> {
-                listener.onItemClicked(entry);
+                longClickListener.onItemClicked(entry);
                 return true;
             });
         }

@@ -28,7 +28,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import ru.gcsales.app.App;
 import ru.gcsales.app.R;
 import ru.gcsales.app.data.model.internal.Item;
-import ru.gcsales.app.data.model.internal.Shop;
 import ru.gcsales.app.presentation.Router;
 import ru.gcsales.app.presentation.presenter.ItemsPresenter;
 
@@ -42,7 +41,9 @@ public class ItemsFlowFragment extends MvpAppCompatFragment implements ItemsView
 
     public static final String TAG = "ItemsFlowFragment";
 
+    private static final String KEY_TITLE = "KEY_TITLE";
     private static final String KEY_SHOP = "KEY_SHOP";
+    private static final String KEY_KEYWORD = "KEY_KEYWORD";
 
     @Inject
     Router mRouter;
@@ -60,12 +61,16 @@ public class ItemsFlowFragment extends MvpAppCompatFragment implements ItemsView
     /**
      * Creates a new instance of this fragment.
      *
-     * @param shop shop model
+     * @param title   title
+     * @param shop    shop name
+     * @param keyword search keyword
      * @return new fragment instance
      */
-    public static ItemsFlowFragment newInstance(@NonNull Shop shop) {
+    public static ItemsFlowFragment newInstance(@NonNull String title, @Nullable String shop, @Nullable String keyword) {
         Bundle args = new Bundle();
-        args.putSerializable(KEY_SHOP, shop);
+        args.putString(KEY_TITLE, title);
+        args.putString(KEY_SHOP, shop);
+        args.putString(KEY_KEYWORD, keyword);
         ItemsFlowFragment fragment = new ItemsFlowFragment();
         fragment.setArguments(args);
         return fragment;
@@ -109,13 +114,14 @@ public class ItemsFlowFragment extends MvpAppCompatFragment implements ItemsView
     @ProvidePresenter
     ItemsPresenter providePresenter() {
         ItemsPresenter presenter = mPresenterProvider.get();
-        presenter.setShopId(getShop().getId());
+        presenter.setShop(getShop());
+        presenter.setKeyword(getKeyword());
         return presenter;
     }
 
     private void initViews(View view) {
         mToolbar = view.findViewById(R.id.toolbar);
-        mToolbar.setTitle(getShop().getName());
+        mToolbar.setTitle(getTitle());
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         mToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         mProgressBar = view.findViewById(R.id.progress_bar);
@@ -125,9 +131,25 @@ public class ItemsFlowFragment extends MvpAppCompatFragment implements ItemsView
     }
 
     @Nullable
-    private Shop getShop() {
+    private String getTitle() {
         if (getArguments() != null) {
-            return (Shop) getArguments().getSerializable(KEY_SHOP);
+            return getArguments().getString(KEY_TITLE);
+        }
+        return null;
+    }
+
+    @Nullable
+    private String getShop() {
+        if (getArguments() != null) {
+            return getArguments().getString(KEY_SHOP);
+        }
+        return null;
+    }
+
+    @Nullable
+    private String getKeyword() {
+        if (getArguments() != null) {
+            return getArguments().getString(KEY_KEYWORD);
         }
         return null;
     }

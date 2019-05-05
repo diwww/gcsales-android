@@ -1,6 +1,7 @@
 package ru.gcsales.app.data.repository;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import io.reactivex.Maybe;
 import ru.gcsales.app.data.model.internal.Item;
 
@@ -19,21 +21,33 @@ import ru.gcsales.app.data.model.internal.Item;
  */
 public class ItemsRepository extends RxFirestoreRepository {
 
-    private static final String PATH = "shops/%s/items";
+    private static final String PATH = "items";
+    private static final String SHOP = "shop";
+    private static final String KEYWORDS = "keywords";
 
     public ItemsRepository(@NonNull FirebaseFirestore firestore) {
         super(firestore);
     }
 
     /**
-     * Get list of items for given shop.
+     * Get list of items with given conditions.
      *
-     * @param id id of the shop
+     * @param shop    shop name
+     * @param keyword search keyword
      * @return {@link Maybe} with list of items
      */
-    public Maybe<List<Item>> getItems(@NonNull String id) {
-        return getCollection(String.format(PATH, id))
+    public Maybe<List<Item>> getItems(@Nullable String shop, @Nullable String keyword) {
+        Query query = mFirestore.collection(PATH);
+        if (shop != null) {
+            query = query.whereEqualTo(SHOP, shop);
+        }
+        if (keyword != null) {
+            query = query.whereArrayContains(KEYWORDS, keyword.toLowerCase()).orderBy(SHOP);
+        }
+
+        return getCollection(query)
                 .map(this::convertQuerySnapshot);
+
     }
 
     @NonNull

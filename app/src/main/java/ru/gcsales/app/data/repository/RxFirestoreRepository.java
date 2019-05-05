@@ -2,6 +2,7 @@ package ru.gcsales.app.data.repository;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
@@ -37,6 +38,31 @@ public class RxFirestoreRepository {
     public Maybe<QuerySnapshot> getCollection(@NonNull String path) {
         return Maybe.create(emitter -> {
             mFirestore.collection(path).get()
+                    .addOnSuccessListener(querySnapshot -> {
+                        if (querySnapshot.isEmpty()) {
+                            emitter.onComplete();
+                        } else {
+                            emitter.onSuccess(querySnapshot);
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        if (!emitter.isDisposed()) {
+                            emitter.onError(e);
+                        }
+                    });
+        });
+    }
+
+    /**
+     * Gets collection applying given query.
+     *
+     * @param query query
+     * @return {@link Maybe} with the result
+     */
+    @NonNull
+    public Maybe<QuerySnapshot> getCollection(@NonNull Query query) {
+        return Maybe.create(emitter -> {
+            query.get()
                     .addOnSuccessListener(querySnapshot -> {
                         if (querySnapshot.isEmpty()) {
                             emitter.onComplete();

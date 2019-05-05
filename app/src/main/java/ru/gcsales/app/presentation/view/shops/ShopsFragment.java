@@ -93,7 +93,7 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView {
 
     @Override
     public void startItemsFlow(@NonNull Shop shop) {
-        mRouter.startItemsFlow(getActivity(), shop);
+        mRouter.startItemsFlow(getActivity(), shop.getName(), shop.getName(), null);
     }
 
     @ProvidePresenter

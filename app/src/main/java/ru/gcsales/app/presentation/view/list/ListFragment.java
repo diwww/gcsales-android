@@ -18,7 +18,9 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -29,6 +31,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import ru.gcsales.app.App;
 import ru.gcsales.app.R;
 import ru.gcsales.app.data.model.internal.ListEntry;
+import ru.gcsales.app.data.model.internal.Shop;
+import ru.gcsales.app.presentation.Router;
 import ru.gcsales.app.presentation.presenter.ListPresenter;
 
 /**
@@ -43,6 +47,9 @@ public class ListFragment extends MvpAppCompatFragment implements ListView, View
 
     @Inject
     Provider<ListPresenter> mPresenterProvider;
+    @Inject
+    Router mRouter;
+
     @InjectPresenter
     ListPresenter mPresenter;
 
@@ -77,7 +84,7 @@ public class ListFragment extends MvpAppCompatFragment implements ListView, View
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mProgressBar = view.findViewById(R.id.progress_bar);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mAdapter = new ListEntriesAdapter(mPresenter::removeEntry);
+        mAdapter = new ListEntriesAdapter(mPresenter::openItems, mPresenter::removeEntry);
         mRecyclerView.setAdapter(mAdapter);
         mNewItemEditText = view.findViewById(R.id.edit_text_new_item);
         mNewItemEditText.setOnEditorActionListener(this);
@@ -112,6 +119,11 @@ public class ListFragment extends MvpAppCompatFragment implements ListView, View
     @Override
     public void setEntries(@NonNull List<ListEntry> entries) {
         mAdapter.setEntries(entries);
+    }
+
+    @Override
+    public void startItemsFlow(@NonNull ListEntry entry) {
+        mRouter.startItemsFlow(getActivity(), entry.getName(), null, entry.getName());
     }
 
     @ProvidePresenter

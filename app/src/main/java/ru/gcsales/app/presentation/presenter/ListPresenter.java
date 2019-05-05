@@ -72,6 +72,10 @@ public class ListPresenter extends MvpPresenter<ListView> {
         mCompositeDisposable.add(disposable);
     }
 
+    public void openItems(@NonNull ListEntry entry) {
+        getViewState().startItemsFlow(entry);
+    }
+
     private void onEntriesLoaded(List<ListEntry> entries) {
         getViewState().setEntries(entries);
     }
@@ -83,4 +87,5 @@ public class ListPresenter extends MvpPresenter<ListView> {
     private void onError(Throwable throwable) {
         getViewState().showError(throwable);
     }
+
 }
