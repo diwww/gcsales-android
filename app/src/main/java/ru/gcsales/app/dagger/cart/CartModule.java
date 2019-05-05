@@ -1,4 +1,4 @@
-package ru.gcsales.app.dagger.list;
+package ru.gcsales.app.dagger.cart;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,6 +26,7 @@ public class CartModule {
         return new CartRepository(firestore, auth);
     }
 
+    // FIXME: unscoped
     @Provides
     public CartPresenter provideListPresenter(@NonNull CartRepository repository) {
         return new CartPresenter(repository);

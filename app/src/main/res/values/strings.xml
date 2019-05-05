@@ -17,6 +17,7 @@
     <string name="item_added">Item was added to the shopping cart.</string>
     <string name="location_permission_message">You should grant location permissions.</string>
     <string name="loading_nearest_shops">Loading nearest shops.</string>
+    <string name="list_hint">Milk</string>
 
     <string name="price">%.2f \u20BD</string>
     <string name="count">%d</string>

@@ -30,6 +30,7 @@ import ru.gcsales.app.R;
 import ru.gcsales.app.data.manager.AuthManager;
 import ru.gcsales.app.presentation.Router;
 import ru.gcsales.app.presentation.view.cart.CartFragment;
+import ru.gcsales.app.presentation.view.list.ListFragment;
 import ru.gcsales.app.presentation.view.shops.ShopsFragment;
 
 /**
@@ -47,6 +48,7 @@ public class MainFlowFragment extends Fragment implements BottomNavigationView.O
 
     private ShopsFragment mShopsFragment;
     private CartFragment mCartFragment;
+    private ListFragment mListFragment;
 
     /**
      * Creates a new instance of this fragment.
@@ -84,6 +86,9 @@ public class MainFlowFragment extends Fragment implements BottomNavigationView.O
             case R.id.navigation_shops:
                 fragment = mShopsFragment;
                 break;
+            case R.id.navigation_list:
+                fragment = mListFragment;
+                break;
             case R.id.navigation_cart:
                 fragment = mCartFragment;
                 break;
@@ -119,6 +124,7 @@ public class MainFlowFragment extends Fragment implements BottomNavigationView.O
     private void initFragments() {
         mShopsFragment = ShopsFragment.newInstance();
         mCartFragment = CartFragment.newInstance();
+        mListFragment = ListFragment.newInstance();
     }
 
     private void showSignOutDialog() {

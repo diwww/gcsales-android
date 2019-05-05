@@ -117,17 +117,14 @@ public class CartRepository extends RxFirestoreRepository {
                     .collection(String.format(COLLECTION_PATH, uid))
                     .orderBy(ORDER_BY_SHOP)
                     .orderBy(ORDER_BY_TIMESTAMP)
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
-                            if (e != null && !emitter.isDisposed()) {
-                                emitter.onError(e);
-                            }
+                    .addSnapshotListener((querySnapshot, e) -> {
+                        if (e != null && !emitter.isDisposed()) {
+                            emitter.onError(e);
+                        }
 
-                            if (querySnapshot != null) {
-                                List<CartEntry> entries = processEntries(convertQuerySnapshot(querySnapshot));
-                                emitter.onNext(entries);
-                            }
+                        if (querySnapshot != null) {
+                            List<CartEntry> entries = processEntries(convertQuerySnapshot(querySnapshot));
+                            emitter.onNext(entries);
                         }
                     });
 
