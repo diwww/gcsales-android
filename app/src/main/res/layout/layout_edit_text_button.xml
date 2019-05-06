@@ -14,9 +14,10 @@
         android:layout_width="@dimen/zero_dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textSize="@dimen/bottom_text_size"
         android:hint="@string/list_hint"
         android:imeOptions="actionDone"
-        android:inputType="textPersonName"/>
+        android:inputType="text|textCapSentences"/>
 
     <ImageButton
         android:id="@+id/button_add"
@@ -26,6 +27,5 @@
         android:layout_gravity="center"
         android:contentDescription="@string/talkback_add_button"
         app:srcCompat="@drawable/ic_add_black_24dp"/>
-
 
 </LinearLayout>

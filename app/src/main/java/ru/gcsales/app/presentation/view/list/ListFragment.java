@@ -133,20 +133,15 @@ public class ListFragment extends MvpAppCompatFragment implements ListView, View
 
     @Override
     public void onClick(View v) {
-        addEntry();
+        mNewItemEditText.onEditorAction(EditorInfo.IME_ACTION_DONE);
     }
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
-            addEntry();
-            return true;
+            mPresenter.addEntry(mNewItemEditText.getText().toString());
+            mNewItemEditText.setText(null);
         }
         return false;
-    }
-
-    private void addEntry() {
-        mPresenter.addEntry(mNewItemEditText.getText().toString());
-        mNewItemEditText.setText(null);
     }
 }
