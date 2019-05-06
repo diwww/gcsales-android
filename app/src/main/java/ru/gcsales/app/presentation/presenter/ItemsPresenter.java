@@ -65,8 +65,6 @@ public class ItemsPresenter extends MvpPresenter<ItemsView> {
         Disposable disposable = mCartRepository.addItem(item)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(__ -> getViewState().showProgress(true))
-                .doOnEvent(__ -> getViewState().showProgress(false))
                 .subscribe(this::onItemAdded, this::onError);
         mCompositeDisposable.add(disposable);
     }

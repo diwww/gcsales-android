@@ -18,8 +18,9 @@ public class Item {
     private String name;
     private String shop;
     private String imageUrl;
-    private Double oldPrice;
-    private Double newPrice;
+    private Double oldPrice = 0.;
+    private Double newPrice = 0.;
+    private boolean mShowShop;
 
     public Item() {
     }
@@ -65,12 +66,21 @@ public class Item {
         this.oldPrice = oldPrice;
     }
 
-    public double getNewPrice() {
+    public Double getNewPrice() {
         return newPrice;
     }
 
     public void setNewPrice(double newPrice) {
         this.newPrice = newPrice;
+    }
+
+    @Exclude
+    public boolean isShowShop() {
+        return mShowShop;
+    }
+
+    public void setShowShop(boolean showShop) {
+        mShowShop = showShop;
     }
 
     @Override

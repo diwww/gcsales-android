@@ -103,9 +103,19 @@ public class CartEntriesAdapter extends RecyclerView.Adapter<CartEntriesAdapter.
             mOpenMapButton.setVisibility(entry.isShowShop() ? View.VISIBLE : View.GONE);
             mTopDivider.setVisibility(entry.isShowShop() ? View.VISIBLE : View.GONE);
             mNameTextView.setText(entry.getName());
-            mOldPriceTextView.setText(resources.getString(R.string.price, entry.getOldPrice()));
-            mOldPriceTextView.setPaintFlags(mOldPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            mNewPriceTextView.setText(resources.getString(R.string.price, entry.getNewPrice()));
+
+            if (entry.getOldPrice() != 0) {
+                mOldPriceTextView.setText(resources.getString(R.string.price, entry.getOldPrice()));
+                mOldPriceTextView.setPaintFlags(mOldPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            } else {
+                mOldPriceTextView.setText(null);
+            }
+            if (entry.getNewPrice() != 0) {
+                mNewPriceTextView.setText(resources.getString(R.string.price, entry.getNewPrice()));
+            } else {
+                mNewPriceTextView.setText(null);
+            }
+
             mCountTextView.setText(resources.getString(R.string.count, entry.getCount()));
 
             Glide.with(mImageView.getContext())

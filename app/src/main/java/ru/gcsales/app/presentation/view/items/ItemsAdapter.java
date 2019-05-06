@@ -61,6 +61,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
 
+        private final TextView mShopTextView;
+        private final View mTopDivider;
         private final ImageView mImageView;
         private final TextView mNameTextView;
         private final TextView mOldPriceTextView;
@@ -69,6 +71,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
+            mShopTextView = itemView.findViewById(R.id.text_shop);
+            mTopDivider = itemView.findViewById(R.id.top_divider);
             mImageView = itemView.findViewById(R.id.image);
             mNameTextView = itemView.findViewById(R.id.text_name);
             mOldPriceTextView = itemView.findViewById(R.id.text_old_price);
@@ -78,10 +82,23 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
 
         public void bind(@NonNull Item item, @NonNull ItemClickListener<Item> listener) {
             final Resources resources = itemView.getResources();
+
+            mShopTextView.setText(item.getShop());
+            mShopTextView.setVisibility(item.isShowShop() ? View.VISIBLE : View.GONE);
+            mTopDivider.setVisibility(item.isShowShop() ? View.VISIBLE : View.GONE);
             mNameTextView.setText(item.getName());
-            mOldPriceTextView.setText(resources.getString(R.string.price, item.getOldPrice()));
-            mOldPriceTextView.setPaintFlags(mOldPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            mNewPriceTextView.setText(resources.getString(R.string.price, item.getNewPrice()));
+
+            if (item.getOldPrice() != 0) {
+                mOldPriceTextView.setText(resources.getString(R.string.price, item.getOldPrice()));
+                mOldPriceTextView.setPaintFlags(mOldPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            } else {
+                mOldPriceTextView.setText(null);
+            }
+            if (item.getNewPrice() != 0) {
+                mNewPriceTextView.setText(resources.getString(R.string.price, item.getNewPrice()));
+            } else {
+                mNewPriceTextView.setText(null);
+            }
 
             Glide.with(mImageView.getContext())
                     .load(item.getImageUrl())

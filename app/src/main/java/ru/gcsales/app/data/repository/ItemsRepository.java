@@ -6,6 +6,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -46,7 +47,8 @@ public class ItemsRepository extends RxFirestoreRepository {
         }
 
         return getCollection(query)
-                .map(this::convertQuerySnapshot);
+                .map(this::convertQuerySnapshot)
+                .map(this::processItems);
 
     }
 
@@ -58,6 +60,27 @@ public class ItemsRepository extends RxFirestoreRepository {
             item.setId(snapshot.getId());
             items.add(item);
         }
+        return items;
+    }
+
+    private List<Item> processItems(@NonNull List<Item> items) {
+        Iterator<Item> iterator = items.iterator();
+        String currentShop = null;
+
+        if (iterator.hasNext()) {
+            Item item = iterator.next();
+            currentShop = item.getShop();
+            item.setShowShop(true);
+        }
+        while (iterator.hasNext()) {
+            Item item = iterator.next();
+            String shop = item.getShop();
+            if (!shop.equals(currentShop)) {
+                currentShop = shop;
+                item.setShowShop(true);
+            }
+        }
+
         return items;
     }
 }

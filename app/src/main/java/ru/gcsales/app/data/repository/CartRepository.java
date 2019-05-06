@@ -2,9 +2,7 @@ package ru.gcsales.app.data.repository;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -14,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import androidx.annotation.NonNull;
@@ -161,7 +158,7 @@ public class CartRepository extends RxFirestoreRepository {
         return entries;
     }
 
-    private List<CartEntry> processEntries(@Nonnull List<CartEntry> entries) {
+    private List<CartEntry> processEntries(@NonNull List<CartEntry> entries) {
         Iterator<CartEntry> iterator = entries.iterator();
         String currentShop = null;
 

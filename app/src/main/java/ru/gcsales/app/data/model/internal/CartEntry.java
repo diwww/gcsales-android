@@ -19,7 +19,6 @@ public class CartEntry extends Item {
 
     private Date mTimestamp;
     private int mCount;
-    private boolean mShowShop;
 
     public CartEntry() {
     }
@@ -60,16 +59,6 @@ public class CartEntry extends Item {
 
     public void setCount(int count) {
         mCount = count;
-    }
-
-
-    @Exclude
-    public boolean isShowShop() {
-        return mShowShop;
-    }
-
-    public void setShowShop(boolean showShop) {
-        mShowShop = showShop;
     }
 
     @Override
