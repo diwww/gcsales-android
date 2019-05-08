@@ -53,6 +53,7 @@ public class ItemsFlowFragment extends MvpAppCompatFragment implements ItemsView
     @InjectPresenter
     ItemsPresenter mPresenter;
 
+    private View mPlaceholderView;
     private Toolbar mToolbar;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
@@ -84,10 +85,22 @@ public class ItemsFlowFragment extends MvpAppCompatFragment implements ItemsView
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_items, container, false);
-        initViews(view);
-        return view;
+        return inflater.inflate(R.layout.fragment_items, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        mPlaceholderView = view.findViewById(R.id.placeholder);
+        mToolbar = view.findViewById(R.id.toolbar);
+        mToolbar.setTitle(getTitle());
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        mToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        mProgressBar = view.findViewById(R.id.progress_bar);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
+        mAdapter = new ItemsAdapter(item -> mPresenter.addToList(item));
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
 
     @Override
     public void showProgress(boolean show) {
@@ -102,8 +115,10 @@ public class ItemsFlowFragment extends MvpAppCompatFragment implements ItemsView
     }
 
     @Override
-    public void setItems(@NotNull @NonNull List<Item> items) {
+    public void setItems(@NonNull List<Item> items) {
         mAdapter.setItems(items);
+        mRecyclerView.setVisibility(items.size() > 0 ? View.VISIBLE : View.GONE);
+        mPlaceholderView.setVisibility(items.size() > 0 ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -117,17 +132,6 @@ public class ItemsFlowFragment extends MvpAppCompatFragment implements ItemsView
         presenter.setShop(getShop());
         presenter.setKeyword(getKeyword());
         return presenter;
-    }
-
-    private void initViews(View view) {
-        mToolbar = view.findViewById(R.id.toolbar);
-        mToolbar.setTitle(getTitle());
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        mToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
-        mProgressBar = view.findViewById(R.id.progress_bar);
-        mRecyclerView = view.findViewById(R.id.recycler_view);
-        mAdapter = new ItemsAdapter(item -> mPresenter.addToList(item));
-        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Nullable

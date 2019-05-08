@@ -44,18 +44,6 @@ public class CartRepository extends RxFirestoreRepository {
     }
 
     /**
-     * Gets shopping cart entries.
-     *
-     * @return {@link Maybe} with the result
-     */
-    public Maybe<List<CartEntry>> getEntries() {
-        String uid = mAuth.getCurrentUser().getUid();
-
-        return getCollection(String.format(COLLECTION_PATH, uid))
-                .map(this::convertQuerySnapshot);
-    }
-
-    /**
      * Adds an item to the shopping cart.
      * If item is already present, then {@link CartRepository#incrementCount(CartEntry)} is called.
      *

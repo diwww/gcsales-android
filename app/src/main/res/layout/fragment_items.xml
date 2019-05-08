@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/white"/>
 
+    <include layout="@layout/layout_placeholder"/>
 
     <include
         layout="@layout/layout_recycler_progress"

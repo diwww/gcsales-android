@@ -45,6 +45,7 @@ public class CartFragment extends MvpAppCompatFragment implements CartView {
     @InjectPresenter
     CartPresenter mPresenter;
 
+    private View mPlaceholderView;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private CartEntriesAdapter mAdapter;
@@ -67,9 +68,16 @@ public class CartFragment extends MvpAppCompatFragment implements CartView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_cart, container, false);
-        initViews(view);
-        return view;
+        return inflater.inflate(R.layout.fragment_cart, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        mPlaceholderView = view.findViewById(R.id.placeholder);
+        mProgressBar = view.findViewById(R.id.progress_bar);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
+        mAdapter = new CartEntriesAdapter(mPresenter::incrementCount, mPresenter::decrementCount, mPresenter::openMap);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -99,6 +107,8 @@ public class CartFragment extends MvpAppCompatFragment implements CartView {
     @Override
     public void setEntries(@NonNull List<CartEntry> entries) {
         mAdapter.setEntries(entries);
+        mRecyclerView.setVisibility(entries.size() > 0 ? View.VISIBLE : View.GONE);
+        mPlaceholderView.setVisibility(entries.size() > 0 ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -109,12 +119,5 @@ public class CartFragment extends MvpAppCompatFragment implements CartView {
     @ProvidePresenter
     CartPresenter providePresenter() {
         return mListPresenterProvider.get();
-    }
-
-    private void initViews(View view) {
-        mProgressBar = view.findViewById(R.id.progress_bar);
-        mRecyclerView = view.findViewById(R.id.recycler_view);
-        mAdapter = new CartEntriesAdapter(mPresenter::incrementCount, mPresenter::decrementCount, mPresenter::openMap);
-        mRecyclerView.setAdapter(mAdapter);
     }
 }

@@ -28,5 +28,6 @@
     <string name="talkback_inc_button">Increase count</string>
     <string name="talkback_dec_button">Decrease count</string>
     <string name="talkback_open_map">Open map</string>
+    <string name="no_items_yet">No items yet.</string>
 
 </resources>

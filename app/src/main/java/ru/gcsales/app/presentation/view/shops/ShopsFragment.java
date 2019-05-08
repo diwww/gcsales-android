@@ -47,6 +47,7 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView {
     @InjectPresenter
     ShopsPresenter mPresenter;
 
+    private View mPlaceholderView;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private ShopsAdapter mAdapter;
@@ -69,9 +70,16 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_shops, container, false);
-        initViews(view);
-        return view;
+        return inflater.inflate(R.layout.fragment_shops, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        mPlaceholderView = view.findViewById(R.id.placeholder);
+        mProgressBar = view.findViewById(R.id.progress_bar);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
+        mAdapter = new ShopsAdapter(mPresenter::openItems);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -89,6 +97,8 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView {
     @Override
     public void setShops(@NotNull List<Shop> shops) {
         mAdapter.setShops(shops);
+        mRecyclerView.setVisibility(shops.size() > 0 ? View.VISIBLE : View.GONE);
+        mPlaceholderView.setVisibility(shops.size() > 0 ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -99,12 +109,5 @@ public class ShopsFragment extends MvpAppCompatFragment implements ShopsView {
     @ProvidePresenter
     ShopsPresenter providePresenter() {
         return mPresenterProvider.get();
-    }
-
-    private void initViews(View view) {
-        mProgressBar = view.findViewById(R.id.progress_bar);
-        mRecyclerView = view.findViewById(R.id.recycler_view);
-        mAdapter = new ShopsAdapter(mPresenter::openItems);
-        mRecyclerView.setAdapter(mAdapter);
     }
 }

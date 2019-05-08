@@ -18,9 +18,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -31,7 +29,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import ru.gcsales.app.App;
 import ru.gcsales.app.R;
 import ru.gcsales.app.data.model.internal.ListEntry;
-import ru.gcsales.app.data.model.internal.Shop;
 import ru.gcsales.app.presentation.Router;
 import ru.gcsales.app.presentation.presenter.ListPresenter;
 
@@ -53,6 +50,7 @@ public class ListFragment extends MvpAppCompatFragment implements ListView, View
     @InjectPresenter
     ListPresenter mPresenter;
 
+    private View mPlaceholderView;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private EditText mNewItemEditText;
@@ -82,6 +80,7 @@ public class ListFragment extends MvpAppCompatFragment implements ListView, View
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        mPlaceholderView = view.findViewById(R.id.placeholder);
         mProgressBar = view.findViewById(R.id.progress_bar);
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mAdapter = new ListEntriesAdapter(mPresenter::openItems, mPresenter::removeEntry);
@@ -119,6 +118,8 @@ public class ListFragment extends MvpAppCompatFragment implements ListView, View
     @Override
     public void setEntries(@NonNull List<ListEntry> entries) {
         mAdapter.setEntries(entries);
+        mRecyclerView.setVisibility(entries.size() > 0 ? View.VISIBLE : View.GONE);
+        mPlaceholderView.setVisibility(entries.size() > 0 ? View.GONE : View.VISIBLE);
     }
 
     @Override

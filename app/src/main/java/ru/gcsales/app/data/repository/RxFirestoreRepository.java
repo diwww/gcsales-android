@@ -38,13 +38,7 @@ public class RxFirestoreRepository {
     public Maybe<QuerySnapshot> getCollection(@NonNull String path) {
         return Maybe.create(emitter -> {
             mFirestore.collection(path).get()
-                    .addOnSuccessListener(querySnapshot -> {
-                        if (querySnapshot.isEmpty()) {
-                            emitter.onComplete();
-                        } else {
-                            emitter.onSuccess(querySnapshot);
-                        }
-                    })
+                    .addOnSuccessListener(emitter::onSuccess)
                     .addOnFailureListener(e -> {
                         if (!emitter.isDisposed()) {
                             emitter.onError(e);
@@ -63,13 +57,7 @@ public class RxFirestoreRepository {
     public Maybe<QuerySnapshot> getCollection(@NonNull Query query) {
         return Maybe.create(emitter -> {
             query.get()
-                    .addOnSuccessListener(querySnapshot -> {
-                        if (querySnapshot.isEmpty()) {
-                            emitter.onComplete();
-                        } else {
-                            emitter.onSuccess(querySnapshot);
-                        }
-                    })
+                    .addOnSuccessListener(emitter::onSuccess)
                     .addOnFailureListener(e -> {
                         if (!emitter.isDisposed()) {
                             emitter.onError(e);

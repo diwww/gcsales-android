@@ -6,6 +6,8 @@
              android:layout_height="match_parent"
              tools:context=".presentation.view.shops.ShopsFragment">
 
+    <include layout="@layout/layout_placeholder"/>
+
     <include layout="@layout/layout_recycler_progress"/>
 
 </FrameLayout>
