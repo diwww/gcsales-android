@@ -20,6 +20,8 @@
     <string name="list_hint">Keyword (e.g. \"Milk\")</string>
     <string name="new_entry">New entry</string>
     <string name="no_items_yet">No items yet.</string>
+    <string name="total_price">Total: %.2f \u20BD</string>
+    <string name="total_discount">Discount: %.2f \u20BD</string>
 
     <string name="price">%.2f \u20BD</string>
     <string name="count">%d</string>

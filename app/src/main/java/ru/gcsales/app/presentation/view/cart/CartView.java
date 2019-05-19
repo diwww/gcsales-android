@@ -25,6 +25,14 @@ public interface CartView extends MvpView, ProgressView, ErrorView {
     void setEntries(@NonNull List<CartEntry> entries);
 
     /**
+     * Sets total price and total discount sum texts.
+     *
+     * @param price    total price
+     * @param discount total discount
+     */
+    void setSums(double price, double discount);
+
+    /**
      * Starts map flow.
      *
      * @param entry shopping cart entry

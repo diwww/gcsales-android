@@ -71,6 +71,7 @@ public class CartPresenter extends MvpPresenter<CartView> {
 
     private void onEntriesLoaded(List<CartEntry> entries) {
         getViewState().setEntries(entries);
+        getViewState().setSums(getTotalPrice(entries), getTotalDiscount(entries));
     }
 
     private void onComplete() {
@@ -79,5 +80,23 @@ public class CartPresenter extends MvpPresenter<CartView> {
 
     private void onError(Throwable throwable) {
         getViewState().showError(throwable);
+    }
+
+    private double getTotalPrice(List<CartEntry> entries) {
+        double price = 0.;
+        for (CartEntry entry : entries) {
+            price += entry.getNewPrice() * entry.getCount();
+        }
+        return price;
+    }
+
+    private double getTotalDiscount(List<CartEntry> entries) {
+        double discount = 0;
+        for (CartEntry entry : entries) {
+            if (entry.getOldPrice() != 0) {
+                discount += (entry.getOldPrice() - entry.getNewPrice()) * entry.getCount();
+            }
+        }
+        return discount;
     }
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_total_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_padding_size_medium"
+        android:layout_marginRight="@dimen/margin_padding_size_medium"
+        android:layout_marginTop="@dimen/margin_padding_size_medium"
+        android:textAppearance="?attr/textAppearanceBody2"
+        tools:text="Сумма покупок: 56р"/>
+
+    <TextView
+        android:id="@+id/text_total_discount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_padding_size_medium"
+        android:layout_marginLeft="@dimen/margin_padding_size_medium"
+        android:layout_marginRight="@dimen/margin_padding_size_medium"
+        android:textAppearance="?attr/textAppearanceBody2"
+        tools:text="Экономия: 57р"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/divider_color"/>
+
+</LinearLayout>

@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -49,6 +51,9 @@ public class CartFragment extends MvpAppCompatFragment implements CartView {
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private CartEntriesAdapter mAdapter;
+    private LinearLayout mCartContainer;
+    private TextView mTotalPriceTextView;
+    private TextView mTotalDiscountTextView;
 
     /**
      * Creates a new instance of this fragment.
@@ -75,6 +80,9 @@ public class CartFragment extends MvpAppCompatFragment implements CartView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mPlaceholderView = view.findViewById(R.id.placeholder);
         mProgressBar = view.findViewById(R.id.progress_bar);
+        mCartContainer = view.findViewById(R.id.cart_container);
+        mTotalPriceTextView = view.findViewById(R.id.text_total_price);
+        mTotalDiscountTextView = view.findViewById(R.id.text_total_discount);
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mAdapter = new CartEntriesAdapter(mPresenter::incrementCount, mPresenter::decrementCount, mPresenter::openMap);
         mRecyclerView.setAdapter(mAdapter);
@@ -107,8 +115,14 @@ public class CartFragment extends MvpAppCompatFragment implements CartView {
     @Override
     public void setEntries(@NonNull List<CartEntry> entries) {
         mAdapter.setEntries(entries);
-        mRecyclerView.setVisibility(entries.size() > 0 ? View.VISIBLE : View.GONE);
+        mCartContainer.setVisibility(entries.size() > 0 ? View.VISIBLE : View.GONE);
         mPlaceholderView.setVisibility(entries.size() > 0 ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void setSums(double price, double discount) {
+        mTotalPriceTextView.setText(getString(R.string.total_price, price));
+        mTotalDiscountTextView.setText(getString(R.string.total_discount, discount));
     }
 
     @Override

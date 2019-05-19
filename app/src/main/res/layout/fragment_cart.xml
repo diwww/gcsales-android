@@ -7,6 +7,17 @@
 
     <include layout="@layout/layout_placeholder"/>
 
-    <include layout="@layout/layout_recycler_progress"/>
+
+    <LinearLayout
+        android:id="@+id/cart_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_prices"/>
+
+        <include layout="@layout/layout_recycler_progress"/>
+
+    </LinearLayout>
 
 </FrameLayout>
