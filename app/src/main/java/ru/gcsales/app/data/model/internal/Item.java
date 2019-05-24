@@ -3,8 +3,11 @@ package ru.gcsales.app.data.model.internal;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.firebase.firestore.Exclude;
+import com.google.firebase.firestore.ServerTimestamp;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Date;
 
 /**
  * Item model.
@@ -21,6 +24,7 @@ public class Item {
     private Double oldPrice = 0.;
     private Double newPrice = 0.;
     private boolean mShowShop;
+    private Date mEndDate;
 
     public Item() {
     }
@@ -70,7 +74,7 @@ public class Item {
         return newPrice;
     }
 
-    public void setNewPrice(double newPrice) {
+    public void setNewPrice(Double newPrice) {
         this.newPrice = newPrice;
     }
 
@@ -81,6 +85,14 @@ public class Item {
 
     public void setShowShop(boolean showShop) {
         mShowShop = showShop;
+    }
+
+    public Date getEndDate() {
+        return mEndDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        mEndDate = endDate;
     }
 
     @Override

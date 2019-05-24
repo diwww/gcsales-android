@@ -6,6 +6,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class ItemsRepository extends RxFirestoreRepository {
 
     private static final String PATH = "items";
     private static final String SHOP = "shop";
+    private static final String END_DATE = "endDate";
     private static final String KEYWORDS = "keywords";
 
     public ItemsRepository(@NonNull FirebaseFirestore firestore) {
@@ -38,7 +40,7 @@ public class ItemsRepository extends RxFirestoreRepository {
      * @return {@link Maybe} with list of items
      */
     public Maybe<List<Item>> getItems(@Nullable String shop, @Nullable String keyword) {
-        Query query = mFirestore.collection(PATH);
+        Query query = mFirestore.collection(PATH).whereGreaterThanOrEqualTo(END_DATE, new Date()).orderBy(END_DATE);
         if (shop != null) {
             query = query.whereEqualTo(SHOP, shop);
         }
