@@ -111,10 +111,10 @@ public class CartEntriesAdapter extends RecyclerView.Adapter<CartEntriesAdapter.
             if (entry.getEndDate() != null) {
                 LocalDate endDate = LocalDate.fromDateFields(entry.getEndDate());
                 LocalDate today = LocalDate.now();
-                if (today.compareTo(endDate) > 0) {
-                    mExpiredTextView.setVisibility(View.VISIBLE);
-                } else {
+                if (today.compareTo(endDate) < 0) {
                     mExpiredTextView.setVisibility(View.GONE);
+                } else {
+                    mExpiredTextView.setVisibility(View.VISIBLE);
                 }
             }
 

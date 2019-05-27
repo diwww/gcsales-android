@@ -8,7 +8,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
+import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -56,6 +59,7 @@ public class CartRepository extends RxFirestoreRepository {
 
         return getDocument(String.format(DOCUMENT_PATH, uid, item.getId()))
                 .map(this::convertDocumentSnapshot)
+                .flatMap(this::checkEndDate)
                 .defaultIfEmpty(CartEntry.fromItem(item))
                 .flatMap(entry -> incrementCount(entry).toMaybe())
                 .ignoreElement();
@@ -126,6 +130,27 @@ public class CartRepository extends RxFirestoreRepository {
                 }
             });
         });
+    }
+
+    /**
+     * Checks whether entry is expired.
+     * <p>And if so returns empty result and this causes cart entry recreation
+     * with new end date.
+     * <p>This method is needed in case of discounted item was reissued and
+     * now has the new end date.
+     *
+     * @param entry cart entry
+     * @return {@link Maybe} with the result
+     */
+    @NonNull
+    private Maybe<CartEntry> checkEndDate(@NonNull CartEntry entry) {
+        LocalDate endDate = LocalDate.fromDateFields(entry.getEndDate());
+        LocalDate today = LocalDate.now();
+        if (today.compareTo(endDate) < 0) {
+            return Maybe.just(entry);
+        } else {
+            return Maybe.empty();
+        }
     }
 
     @Nullable
