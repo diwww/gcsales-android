@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,6 +79,7 @@ public class CartEntriesAdapter extends RecyclerView.Adapter<CartEntriesAdapter.
         private final TextView mCountTextView;
         private final ImageButton mIncrementButton;
         private final ImageButton mDecrementButton;
+        private final TextView mExpiredTextView;
 
         public CartEntryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,6 +93,7 @@ public class CartEntriesAdapter extends RecyclerView.Adapter<CartEntriesAdapter.
             mCountTextView = itemView.findViewById(R.id.text_count);
             mIncrementButton = itemView.findViewById(R.id.button_increment);
             mDecrementButton = itemView.findViewById(R.id.button_decrement);
+            mExpiredTextView = itemView.findViewById(R.id.text_expired);
         }
 
         public void bind(@NonNull CartEntry entry,
@@ -103,6 +107,16 @@ public class CartEntriesAdapter extends RecyclerView.Adapter<CartEntriesAdapter.
             mOpenMapButton.setVisibility(entry.isShowShop() ? View.VISIBLE : View.GONE);
             mTopDivider.setVisibility(entry.isShowShop() ? View.VISIBLE : View.GONE);
             mNameTextView.setText(entry.getName());
+
+            if (entry.getEndDate() != null) {
+                LocalDate endDate = LocalDate.fromDateFields(entry.getEndDate());
+                LocalDate today = LocalDate.now();
+                if (today.compareTo(endDate) > 0) {
+                    mExpiredTextView.setVisibility(View.VISIBLE);
+                } else {
+                    mExpiredTextView.setVisibility(View.GONE);
+                }
+            }
 
             if (entry.getOldPrice() != 0) {
                 mOldPriceTextView.setText(resources.getString(R.string.price, entry.getOldPrice()));

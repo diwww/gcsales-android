@@ -31,6 +31,7 @@ public class CartEntry extends Item {
         entry.setNewPrice(item.getNewPrice());
         entry.setOldPrice(item.getOldPrice());
         entry.setShop(item.getShop());
+        entry.setEndDate(item.getEndDate());
         return entry;
     }
 

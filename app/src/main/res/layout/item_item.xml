@@ -52,13 +52,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_padding_size_medium"
         android:layout_marginStart="@dimen/margin_padding_size_medium"
+        android:layout_marginTop="@dimen/margin_padding_size_small"
         android:ellipsize="end"
         android:maxLines="2"
         android:textAppearance="?attr/textAppearanceBody1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintTop_toTopOf="@+id/image"
-        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintTop_toBottomOf="@+id/text_end_date"
         tools:text="Бананы 1кг, очень длинный текст, который даже не помещается в одну строку"/>
 
     <ImageButton
@@ -77,10 +77,9 @@
         android:id="@+id/text_old_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_padding_size_medium"
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:textAppearance="?attr/textAppearanceBody2"
-        app:layout_constraintBottom_toTopOf="@+id/text_new_price"
+        app:layout_constraintBottom_toBottomOf="@+id/image"
         app:layout_constraintStart_toEndOf="@+id/image"
         tools:text="48р"/>
 
@@ -89,17 +88,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_size_medium"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        app:layout_constraintBottom_toBottomOf="@+id/image"
-        app:layout_constraintStart_toEndOf="@+id/image"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:layout_constraintBottom_toBottomOf="@+id/text_old_price"
+        app:layout_constraintStart_toEndOf="@+id/text_old_price"
         tools:text="42р"/>
 
     <View
+        android:id="@+id/view"
         android:layout_width="@dimen/zero_dp"
         android:layout_height="@dimen/divider_height"
         android:background="@color/divider_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/text_end_date"
+        android:layout_width="235dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_padding_size_small"
+        android:layout_marginStart="@dimen/margin_padding_size_small"
+        android:ellipsize="end"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:textColor="@color/red"
+        android:maxLines="1"
+        android:textAppearance="?attr/textAppearanceCaption"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image"
+        app:layout_constraintTop_toTopOf="@+id/image"
+        tools:text="До конца акции 1 день"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -66,10 +66,10 @@
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textAppearance="?attr/textAppearanceBody1"
+        android:textAppearance="?attr/textAppearanceCaption"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintTop_toTopOf="@+id/image"
+        app:layout_constraintTop_toBottomOf="@+id/text_expired"
         tools:text="Бананы 1кг, очень длинный текст, который даже не помещается в одну строку"/>
 
     <View
@@ -96,7 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_size_medium"
-        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textAppearance="?attr/textAppearanceBody1"
         app:layout_constraintBottom_toBottomOf="@+id/image"
         app:layout_constraintStart_toEndOf="@+id/text_old_price"
         tools:text="42р"/>
@@ -134,5 +134,22 @@
         app:layout_constraintEnd_toStartOf="@+id/button_increment"
         app:layout_constraintTop_toTopOf="@+id/button_increment"
         tools:text="23"/>
+
+    <TextView
+        android:id="@+id/text_expired"
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_padding_size_medium"
+        android:layout_marginStart="@dimen/margin_padding_size_medium"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/expired"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:textColor="@color/red"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image"
+        app:layout_constraintTop_toTopOf="@+id/image"
+        tools:visibility="visible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

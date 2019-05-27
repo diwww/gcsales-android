@@ -24,7 +24,7 @@ public class Item {
     private Double oldPrice = 0.;
     private Double newPrice = 0.;
     private boolean mShowShop;
-    private Date mEndDate;
+    private Date mEndDate = new Date();
 
     public Item() {
     }

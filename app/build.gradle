@@ -79,6 +79,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha05'
     // endregion
 
+    implementation 'joda-time:joda-time:2.10.2'
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 

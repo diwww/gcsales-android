@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +71,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         private final TextView mOldPriceTextView;
         private final TextView mNewPriceTextView;
         private final ImageButton mAddButton;
+        private final TextView mEndDateTextView;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,6 +82,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
             mOldPriceTextView = itemView.findViewById(R.id.text_old_price);
             mNewPriceTextView = itemView.findViewById(R.id.text_new_price);
             mAddButton = itemView.findViewById(R.id.button_add);
+            mEndDateTextView = itemView.findViewById(R.id.text_end_date);
         }
 
         public void bind(@NonNull Item item, @NonNull ItemClickListener<Item> listener) {
@@ -87,6 +92,18 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
             mShopTextView.setVisibility(item.isShowShop() ? View.VISIBLE : View.GONE);
             mTopDivider.setVisibility(item.isShowShop() ? View.VISIBLE : View.GONE);
             mNameTextView.setText(item.getName());
+
+            if (item.getEndDate() != null) {
+                LocalDate endDate = LocalDate.fromDateFields(item.getEndDate());
+                LocalDate today = LocalDate.now();
+                int daysBetween = Days.daysBetween(today, endDate).getDays();
+                if (daysBetween <= 3) {
+                    mEndDateTextView.setText(resources.getString(R.string.expire_warning, daysBetween));
+                    mEndDateTextView.setVisibility(View.VISIBLE);
+                } else {
+                    mEndDateTextView.setVisibility(View.GONE);
+                }
+            }
 
             if (item.getOldPrice() != 0) {
                 mOldPriceTextView.setText(resources.getString(R.string.price, item.getOldPrice()));
