@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">gcSales</string>
+    <string name="expired">Акция закончилась</string>
+    <string name="item_added">Товар добавлен в корзину</string>
+    <string name="list">Список</string>
+    <string name="list_hint">Например, \"Молоко\"</string>
+    <string name="loading_error">Ошибка загрузки данных.</string>
+    <string name="location_permission_message">Необходимо предоставить разрешения для геолокации.</string>
+    <string name="map">Карта</string>
+    <string name="new_entry">Добавить</string>
+    <string name="no">Нет</string>
+    <string name="no_internet_connection">Нет соединения.</string>
+    <string name="no_items_yet">Элементы отсутствуют.</string>
+    <string name="ok">Ок</string>
+    <string name="shops">Магазины</string>
+    <string name="sign_in">Войти</string>
+    <string name="sign_in_cancelled">Вход отменен</string>
+    <string name="sign_out">Выйти</string>
+    <string name="sign_out_dialog_message">Вы действительно хотите выйти?</string>
+    <string name="talkback_add_button">Добавить в корзину</string>
+    <string name="talkback_dec_button">Уменьшить количество</string>
+    <string name="talkback_inc_button">Увеличить количество</string>
+    <string name="talkback_open_map">Открыть карту</string>
+    <string name="total_discount">Скидка: %.2f \u20BD</string>
+    <string name="total_price">Всего: %.2f \u20BD</string>
+    <string name="unknown_error">Произошла неизвестная ошибка.</string>
+    <string name="yes">Да</string>
+    <string name="cart">Корзина</string>
+    <string name="expire_warning">Осталось дней: %d</string>
+</resources>

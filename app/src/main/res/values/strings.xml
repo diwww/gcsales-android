@@ -24,8 +24,8 @@
     <string name="total_discount">Discount: %.2f \u20BD</string>
     <string name="expire_warning">Expires in %d days</string>
 
-    <string name="price">%.2f \u20BD</string>
-    <string name="count">%d</string>
+    <string name="price" translatable="false">%.2f \u20BD</string>
+    <string name="count" translatable="false">%d</string>
 
 
     <!--TalkBack-->
@@ -33,8 +33,8 @@
     <string name="talkback_inc_button">Increase count</string>
     <string name="talkback_dec_button">Decrease count</string>
     <string name="talkback_open_map">Open map</string>
-    <string name="ok">Ok</string>
-    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="cancel" translatable="false">Cancel</string>
     <string name="expired">Expired</string>
 
 </resources>
