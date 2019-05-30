@@ -33,8 +33,8 @@ import ru.gcsales.app.data.model.internal.Item;
  */
 public class CartRepository extends RxFirestoreRepository {
 
-    private static final String COLLECTION_PATH = "users/%s/items";
-    private static final String DOCUMENT_PATH = "users/%s/items/%s";
+    private static final String COLLECTION_PATH = "users/%s/cart";
+    private static final String DOCUMENT_PATH = "users/%s/cart/%s";
     private static final String ORDER_BY_SHOP = "shop";
     private static final String ORDER_BY_TIMESTAMP = "timestamp";
 

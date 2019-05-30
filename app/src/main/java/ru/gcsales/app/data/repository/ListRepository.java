@@ -23,8 +23,8 @@ import ru.gcsales.app.data.model.internal.ListEntry;
  */
 public class ListRepository extends RxFirestoreRepository {
 
-    private static final String COLLECTION_PATH = "users/%s/grocery_list";
-    private static final String DOCUMENT_PATH = "users/%s/grocery_list/%s";
+    private static final String COLLECTION_PATH = "users/%s/list";
+    private static final String DOCUMENT_PATH = "users/%s/list/%s";
     private static final String ORDER_BY_TIMESTAMP = "timestamp";
 
     private final FirebaseAuth mAuth;
