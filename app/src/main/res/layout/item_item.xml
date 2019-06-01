@@ -104,19 +104,19 @@
 
     <TextView
         android:id="@+id/text_end_date"
-        android:layout_width="235dp"
+        android:layout_width="@dimen/zero_dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_padding_size_small"
-        android:layout_marginStart="@dimen/margin_padding_size_small"
+        android:layout_marginEnd="@dimen/margin_padding_size_medium"
+        android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:ellipsize="end"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:textColor="@color/red"
         android:maxLines="1"
         android:textAppearance="?attr/textAppearanceCaption"
+        android:textColor="@color/red"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image"
         app:layout_constraintTop_toTopOf="@+id/image"
-        tools:text="До конца акции 1 день"/>
+        tools:text="До конца акции 1 день"
+        tools:visibility="visible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
